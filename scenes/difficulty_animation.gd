@@ -7,12 +7,13 @@ extends Panel
 @onready var animation_timer: Timer = $AnimationTimer
 @onready var delay_timer: Timer = $DelayTimer
 
-var difficulty = 80
+var difficulty = 63
 var current_difficulty = 0
 var animation_running = false  # Tracks if animation is already running
 
 func _ready() -> void:
-	pass
+	play_animation()
+	
 	
 func play_animation():
 	if not animation_running:  # Prevent multiple animations
