@@ -1,0 +1,412 @@
+[gd_scene load_steps=22 format=3 uid="uid://cntutkru2mait"]
+
+[ext_resource type="Texture2D" uid="uid://cjdl41dhgb81w" path="res://sprites/HealthBar.png" id="1_1uwvm"]
+[ext_resource type="Texture2D" uid="uid://bnhs56vyuaqh" path="res://sprites/DifficultyBarUnderAnimation.png" id="1_p6gv8"]
+[ext_resource type="Script" path="res://scripts/difficulty_animation.gd" id="1_q6dch"]
+[ext_resource type="Texture2D" uid="uid://rto1inbs07ou" path="res://sprites/DifficultyBarAnimation.png" id="2_3i5y8"]
+[ext_resource type="Texture2D" uid="uid://b6k6ues27i2bw" path="res://sprites/PowerUpBar.png" id="2_p353y"]
+[ext_resource type="PackedScene" uid="uid://1fff3omigu4i" path="res://scenes/PowerUp.tscn" id="3_hklyj"]
+[ext_resource type="Texture2D" uid="uid://c4rlqltrb4l7o" path="res://sprites/EnemyHealthBarUnder.png" id="3_ogkdd"]
+[ext_resource type="Texture2D" uid="uid://csawjxwjg75vl" path="res://sprites/GameDataBar.png" id="4_3e3ya"]
+[ext_resource type="Texture2D" uid="uid://cbhfjvd6scab0" path="res://sprites/HealthBarUnder.png" id="4_kboja"]
+[ext_resource type="Texture2D" uid="uid://dkyijtdyshco1" path="res://sprites/EnemyHealthBar.png" id="4_r3dnk"]
+[ext_resource type="Texture2D" uid="uid://dlsonc30ecwvh" path="res://sprites/clock.png" id="5_khcpc"]
+[ext_resource type="Texture2D" uid="uid://w0ibc0uudn1x" path="res://sprites/DifficultyBar.png" id="5_n1bf3"]
+[ext_resource type="Script" path="res://scripts/ui_manager.gd" id="7_ukaty"]
+[ext_resource type="Texture2D" uid="uid://bljycfj165j1e" path="res://sprites/DifficultyBarUnder.png" id="10_4ai41"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xk8k3"]
+bg_color = Color(0.117647, 0.117647, 0.117647, 0.988235)
+
+[sub_resource type="Animation" id="Animation_l0b11"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -1976)]
+}
+
+[sub_resource type="Animation" id="Animation_4rsar"]
+resource_name = "difficulty_animation"
+length = 1.5
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector2(0, -1976), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_4mjl0"]
+resource_name = "difficulty_animation_out"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o4aii"]
+_data = {
+"RESET": SubResource("Animation_l0b11"),
+"difficulty_animation_in": SubResource("Animation_4rsar"),
+"difficulty_animation_out": SubResource("Animation_4mjl0")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k4ioq"]
+bg_color = Color(0.868985, 0.868985, 0.868985, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kf3su"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="GameUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DifficultyAnimation" type="Panel" parent="."]
+unique_name_in_owner = true
+z_index = 10
+layout_mode = 0
+offset_top = -1976.0
+offset_right = 1080.0
+offset_bottom = -56.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_xk8k3")
+script = ExtResource("1_q6dch")
+
+[node name="DifficultyText" type="Label" parent="DifficultyAnimation"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.0
+offset_top = 1008.0
+offset_right = 70.0
+offset_bottom = 1344.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 196
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DifficultyBar" type="TextureProgressBar" parent="DifficultyAnimation"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -135.5
+offset_top = 854.0
+offset_right = 135.5
+offset_bottom = 997.0
+grow_horizontal = 2
+texture_under = ExtResource("1_p6gv8")
+texture_progress = ExtResource("2_3i5y8")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DifficultyAnimation"]
+libraries = {
+"": SubResource("AnimationLibrary_o4aii")
+}
+
+[node name="Title" type="Label" parent="DifficultyAnimation"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -506.0
+offset_top = 700.0
+offset_right = 512.0
+offset_bottom = 811.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 80
+text = "Your Problem Difficulty Is:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationTimer" type="Timer" parent="DifficultyAnimation"]
+wait_time = 1.5
+
+[node name="Timer" type="Timer" parent="DifficultyAnimation"]
+wait_time = 0.05
+
+[node name="DelayTimer" type="Timer" parent="DifficultyAnimation"]
+
+[node name="BG" type="Panel" parent="."]
+z_index = -5
+layout_mode = 0
+offset_right = 1080.0
+offset_bottom = 1920.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_k4ioq")
+
+[node name="Panel" type="Panel" parent="."]
+z_index = -4
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -611.0
+offset_top = -31.0
+offset_right = -571.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(30, 1)
+theme_override_styles/panel = SubResource("StyleBoxFlat_kf3su")
+
+[node name="YourHealthBar" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_left = 238.0
+offset_top = 1619.0
+offset_right = 843.0
+offset_bottom = 1933.0
+value = 100.0
+rounded = true
+texture_under = ExtResource("4_kboja")
+texture_progress = ExtResource("1_1uwvm")
+
+[node name="YourHealthBarText" type="Label" parent="YourHealthBar"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -69.0
+offset_top = -119.0
+offset_right = 68.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 80
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EnemyHealthBar" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_left = 238.0
+offset_right = 843.0
+offset_bottom = 314.0
+value = 100.0
+rounded = true
+texture_under = ExtResource("3_ogkdd")
+texture_progress = ExtResource("4_r3dnk")
+
+[node name="EnemyHealthBarText" type="Label" parent="EnemyHealthBar"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -69.0
+offset_top = 13.0
+offset_right = 68.0
+offset_bottom = 123.0
+grow_horizontal = 2
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 80
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PowerUpBar" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -306.0
+offset_right = 243.0
+offset_bottom = 311.0
+grow_vertical = 2
+texture = ExtResource("2_p353y")
+
+[node name="PowerUpIcon" parent="PowerUpBar" instance=ExtResource("3_hklyj")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -85.0
+offset_top = 30.0
+offset_right = 85.0
+offset_bottom = 200.0
+grow_horizontal = 2
+script = null
+
+[node name="PowerUpIcon2" parent="PowerUpBar" instance=ExtResource("3_hklyj")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -85.0
+offset_top = -85.0
+offset_right = 85.0
+offset_bottom = 85.0
+grow_horizontal = 2
+grow_vertical = 2
+script = null
+
+[node name="PowerUpIcon3" parent="PowerUpBar" instance=ExtResource("3_hklyj")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -85.0
+offset_top = -200.0
+offset_right = 85.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+script = null
+
+[node name="GameDataBar" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("4_3e3ya")
+
+[node name="Clock" type="TextureRect" parent="GameDataBar"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -136.5
+offset_top = 35.0
+offset_right = 137.5
+offset_bottom = 309.0
+grow_horizontal = 2
+texture = ExtResource("5_khcpc")
+
+[node name="TimeText" type="Label" parent="GameDataBar/Clock"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 86
+text = "0"
+
+[node name="DifficultyBar" type="TextureProgressBar" parent="GameDataBar"]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 359.0
+offset_right = 304.0
+offset_bottom = 516.0
+value = 100.0
+texture_under = ExtResource("10_4ai41")
+texture_progress = ExtResource("5_n1bf3")
+
+[node name="DifficultyText" type="Label" parent="GameDataBar/DifficultyBar"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -32.0
+offset_top = 76.0
+offset_right = 32.0
+offset_bottom = 153.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 56
+text = "0"
+horizontal_alignment = 1
+
+[node name="UIManager" type="Node2D" parent="."]
+script = ExtResource("7_ukaty")
+
+[node name="EnemyEquationText" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -278.0
+offset_top = 356.0
+offset_right = 280.0
+offset_bottom = 467.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 76
+text = "Opponent Problem:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="YourEquationText2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -278.5
+offset_top = 478.0
+offset_right = 279.5
+offset_bottom = 589.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 76
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="YourEquation" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -319.0
+offset_top = -454.0
+offset_right = 320.0
+offset_bottom = -386.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="YourEquationText" type="Label" parent="YourEquation"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -279.0
+offset_top = -125.0
+offset_right = 279.0
+offset_bottom = -14.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 76
+text = "Your Problem:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="timeout" from="DifficultyAnimation/AnimationTimer" to="DifficultyAnimation" method="_on_animation_timer_timeout"]
+[connection signal="timeout" from="DifficultyAnimation/Timer" to="DifficultyAnimation" method="_on_timer_timeout"]
