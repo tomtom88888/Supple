@@ -1,7 +1,8 @@
-[gd_scene load_steps=21 format=3 uid="uid://cntutkru2mait"]
+[gd_scene load_steps=23 format=3 uid="uid://cntutkru2mait"]
 
 [ext_resource type="Texture2D" uid="uid://cjdl41dhgb81w" path="res://sprites/HealthBar.png" id="1_1uwvm"]
-[ext_resource type="Script" path="res://scenes/difficulty_animation.gd" id="1_h3sru"]
+[ext_resource type="Script" path="res://scripts/oponnent_equation_animation.gd" id="1_15my4"]
+[ext_resource type="Script" path="res://scripts/difficulty_animation.gd" id="1_h3sru"]
 [ext_resource type="Texture2D" uid="uid://bnhs56vyuaqh" path="res://sprites/DifficultyBarUnderAnimation.png" id="1_p6gv8"]
 [ext_resource type="Texture2D" uid="uid://rto1inbs07ou" path="res://sprites/DifficultyBarAnimation.png" id="2_3i5y8"]
 [ext_resource type="Texture2D" uid="uid://b6k6ues27i2bw" path="res://sprites/PowerUpBar.png" id="2_p353y"]
@@ -14,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://w0ibc0uudn1x" path="res://sprites/DifficultyBar.png" id="5_n1bf3"]
 [ext_resource type="Script" path="res://scripts/ui_manager.gd" id="7_ukaty"]
 [ext_resource type="Texture2D" uid="uid://bljycfj165j1e" path="res://sprites/DifficultyBarUnder.png" id="10_4ai41"]
+[ext_resource type="Texture2D" uid="uid://c1eo24dl8070n" path="res://Group 2.png" id="15_qqb73"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xk8k3"]
 bg_color = Color(0.117647, 0.117647, 0.117647, 0.988235)
@@ -70,16 +72,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DifficultyAnimation2" type="Panel" parent="."]
+[node name="OpEqAnim" type="Panel" parent="."]
+visible = false
 z_index = 10
 layout_mode = 0
 offset_top = -1976.0
 offset_right = 1080.0
 offset_bottom = -56.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_xk8k3")
-script = ExtResource("1_h3sru")
+script = ExtResource("1_15my4")
 
-[node name="DifficultyText" type="Label" parent="DifficultyAnimation2"]
+[node name="DifficultyText" type="Label" parent="OpEqAnim"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -94,7 +97,7 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DifficultyBar" type="TextureProgressBar" parent="DifficultyAnimation2"]
+[node name="DifficultyBar" type="TextureProgressBar" parent="OpEqAnim"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -107,13 +110,12 @@ grow_horizontal = 2
 texture_under = ExtResource("1_p6gv8")
 texture_progress = ExtResource("2_3i5y8")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="DifficultyAnimation2"]
-root_node = NodePath("../../DifficultyAnimation2")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="OpEqAnim"]
 libraries = {
 "": SubResource("AnimationLibrary_o4aii")
 }
 
-[node name="Title2" type="Label" parent="DifficultyAnimation2"]
+[node name="Title2" type="Label" parent="OpEqAnim"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -129,7 +131,7 @@ text = "The Opponent's Equation
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Title" type="Label" parent="DifficultyAnimation2"]
+[node name="Title" type="Label" parent="OpEqAnim"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -144,7 +146,7 @@ text = "The Equation's Difficulty Is:"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Title" type="Label" parent="DifficultyAnimation2/Title"]
+[node name="Title" type="Label" parent="OpEqAnim/Title"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -159,18 +161,16 @@ text = "<equation>"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AnimationTimer" type="Timer" parent="DifficultyAnimation2"]
+[node name="AnimationTimer" type="Timer" parent="OpEqAnim"]
 wait_time = 0.5
 
-[node name="Timer" type="Timer" parent="DifficultyAnimation2"]
+[node name="Timer" type="Timer" parent="OpEqAnim"]
 wait_time = 0.05
 
-[node name="DelayTimer" type="Timer" parent="DifficultyAnimation2"]
+[node name="DelayTimer" type="Timer" parent="OpEqAnim"]
 wait_time = 1.5
 
 [node name="DifficultyAnimation" type="Panel" parent="."]
-unique_name_in_owner = true
-visible = false
 z_index = 10
 layout_mode = 0
 offset_top = -1976.0
@@ -212,6 +212,22 @@ libraries = {
 "": SubResource("AnimationLibrary_o4aii")
 }
 
+[node name="now_go" type="Label" parent="DifficultyAnimation"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -505.5
+offset_top = 1537.0
+offset_right = 517.5
+offset_bottom = 1648.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 80
+text = "NOW SOLVE IT!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Title" type="Label" parent="DifficultyAnimation"]
 layout_mode = 1
 anchors_preset = 5
@@ -223,7 +239,7 @@ offset_right = 512.0
 offset_bottom = 811.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 80
-text = "Your Problem Difficulty Is:"
+text = "Your Equation Difficulty Is:"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -231,10 +247,9 @@ vertical_alignment = 1
 wait_time = 0.5
 
 [node name="Timer" type="Timer" parent="DifficultyAnimation"]
-wait_time = 0.05
+wait_time = 0.035
 
 [node name="DelayTimer" type="Timer" parent="DifficultyAnimation"]
-wait_time = 1.5
 
 [node name="BG" type="Panel" parent="."]
 z_index = -5
@@ -287,7 +302,7 @@ grow_vertical = 0
 size_flags_vertical = 8
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 80
-text = "0"
+text = "100"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -314,7 +329,7 @@ grow_horizontal = 2
 size_flags_vertical = 8
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 80
-text = "0"
+text = "100"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -412,7 +427,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 86
-text = "0"
+text = "60"
 
 [node name="DifficultyBar" type="TextureProgressBar" parent="GameDataBar"]
 layout_mode = 0
@@ -447,18 +462,18 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -318.0
-offset_top = 348.0
-offset_right = 405.0
-offset_bottom = 459.0
+offset_left = -370.0
+offset_top = 368.0
+offset_right = 370.0
+offset_bottom = 479.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 76
-text = "Opponent Problem:"
+text = "Opponent Equation:"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="YourEquationText" type="Label" parent="."]
+[node name="EnemyEquationTextNumber" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -474,21 +489,44 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="SubmitButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -170.5
+offset_top = -101.5
+offset_right = 170.5
+offset_bottom = 101.5
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+icon = ExtResource("15_qqb73")
+flat = true
+
 [node name="YourEquation" type="LineEdit" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -319.0
-offset_top = -454.0
-offset_right = 320.0
-offset_bottom = -386.0
+offset_left = -400.0
+offset_top = -444.0
+offset_right = 400.0
+offset_bottom = -353.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_font_sizes/font_size = 60
+placeholder_text = "equation goes here"
+alignment = 1
+virtual_keyboard_type = 3
 
 [node name="YourEquationText" type="Label" parent="YourEquation"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -500,13 +538,14 @@ offset_bottom = -14.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 76
-text = "Your Problem:"
+text = "Your Equation:"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="timeout" from="DifficultyAnimation2/AnimationTimer" to="DifficultyAnimation2" method="_on_animation_timer_timeout"]
-[connection signal="timeout" from="DifficultyAnimation2/Timer" to="DifficultyAnimation2" method="_on_timer_timeout"]
-[connection signal="timeout" from="DifficultyAnimation2/DelayTimer" to="DifficultyAnimation2" method="_on_delay_timer_timeout"]
+[connection signal="timeout" from="OpEqAnim/AnimationTimer" to="OpEqAnim" method="_on_animation_timer_timeout"]
+[connection signal="timeout" from="OpEqAnim/Timer" to="OpEqAnim" method="_on_timer_timeout"]
+[connection signal="timeout" from="OpEqAnim/DelayTimer" to="OpEqAnim" method="_on_delay_timer_timeout"]
 [connection signal="timeout" from="DifficultyAnimation/AnimationTimer" to="DifficultyAnimation" method="_on_animation_timer_timeout"]
 [connection signal="timeout" from="DifficultyAnimation/Timer" to="DifficultyAnimation" method="_on_timer_timeout"]
 [connection signal="timeout" from="DifficultyAnimation/DelayTimer" to="DifficultyAnimation" method="_on_delay_timer_timeout"]
+[connection signal="pressed" from="SubmitButton" to="DifficultyAnimation" method="_on_button_pressed"]

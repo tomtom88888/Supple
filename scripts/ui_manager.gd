@@ -8,10 +8,19 @@ extends Node2D
 @onready var enemy_health_bar_text: Label = $"../EnemyHealthBar/EnemyHealthBarText"
 @onready var difficulty_bar: TextureProgressBar = $"../GameDataBar/DifficultyBar"
 @onready var difficulty_text: Label = $"../GameDataBar/DifficultyBar/DifficultyText"
-@onready var difficulty_animation: Panel = %"DifficultyAnimation"
 
 # Called when the node enters the scene tree for the first time.
+
+func lower_time() -> void:
+	var num = 60
+	while num > 0:
+		set_time(num)
+		await get_tree().create_timer(1).timeout
+		num -= 1
+
+
 func _ready() -> void:
+	lower_time()
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
