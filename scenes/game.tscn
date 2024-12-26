@@ -523,7 +523,6 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 60
 placeholder_text = "equation goes here"
 alignment = 1
-virtual_keyboard_type = 3
 
 [node name="YourEquationText" type="Label" parent="YourEquation"]
 unique_name_in_owner = true
