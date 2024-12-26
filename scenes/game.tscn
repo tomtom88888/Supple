@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cntutkru2mait"]
+[gd_scene load_steps=24 format=3 uid="uid://cntutkru2mait"]
 
 [ext_resource type="Texture2D" uid="uid://cjdl41dhgb81w" path="res://sprites/HealthBar.png" id="1_1uwvm"]
 [ext_resource type="Script" path="res://scripts/oponnent_equation_animation.gd" id="1_15my4"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://scripts/ui_manager.gd" id="7_ukaty"]
 [ext_resource type="Texture2D" uid="uid://bljycfj165j1e" path="res://sprites/DifficultyBarUnder.png" id="10_4ai41"]
 [ext_resource type="Texture2D" uid="uid://c1eo24dl8070n" path="res://Group 2.png" id="15_qqb73"]
+[ext_resource type="Script" path="res://scripts/your_equation.gd" id="17_wkae4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xk8k3"]
 bg_color = Color(0.117647, 0.117647, 0.117647, 0.988235)
@@ -73,7 +74,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="OpEqAnim" type="Panel" parent="."]
-visible = false
 z_index = 10
 layout_mode = 0
 offset_top = -1976.0
@@ -131,7 +131,22 @@ text = "The Opponent's Equation
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Title" type="Label" parent="OpEqAnim"]
+[node name="Title3" type="Label" parent="OpEqAnim"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -509.0
+offset_top = 1390.0
+offset_right = 509.0
+offset_bottom = 1501.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 80
+text = "Time To Solve:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EquationTitle" type="Label" parent="OpEqAnim"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -146,7 +161,7 @@ text = "The Equation's Difficulty Is:"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Title" type="Label" parent="OpEqAnim/Title"]
+[node name="EquationText" type="Label" parent="OpEqAnim/EquationTitle"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -170,7 +185,37 @@ wait_time = 0.05
 [node name="DelayTimer" type="Timer" parent="OpEqAnim"]
 wait_time = 1.5
 
+[node name="Clock" type="TextureRect" parent="OpEqAnim"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -144.0
+offset_top = 1519.0
+offset_right = 130.0
+offset_bottom = 1793.0
+grow_horizontal = 2
+texture = ExtResource("5_khcpc")
+
+[node name="TimeText" type="Label" parent="OpEqAnim/Clock"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 86
+text = "60"
+
 [node name="DifficultyAnimation" type="Panel" parent="."]
+visible = false
 z_index = 10
 layout_mode = 0
 offset_top = -1976.0
@@ -523,6 +568,7 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 60
 placeholder_text = "equation goes here"
 alignment = 1
+script = ExtResource("17_wkae4")
 
 [node name="YourEquationText" type="Label" parent="YourEquation"]
 unique_name_in_owner = true
@@ -541,10 +587,13 @@ text = "Your Equation:"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="ServerLogic" type="Node2D" parent="."]
+
 [connection signal="timeout" from="OpEqAnim/AnimationTimer" to="OpEqAnim" method="_on_animation_timer_timeout"]
 [connection signal="timeout" from="OpEqAnim/Timer" to="OpEqAnim" method="_on_timer_timeout"]
 [connection signal="timeout" from="OpEqAnim/DelayTimer" to="OpEqAnim" method="_on_delay_timer_timeout"]
 [connection signal="timeout" from="DifficultyAnimation/AnimationTimer" to="DifficultyAnimation" method="_on_animation_timer_timeout"]
 [connection signal="timeout" from="DifficultyAnimation/Timer" to="DifficultyAnimation" method="_on_timer_timeout"]
 [connection signal="timeout" from="DifficultyAnimation/DelayTimer" to="DifficultyAnimation" method="_on_delay_timer_timeout"]
-[connection signal="pressed" from="SubmitButton" to="DifficultyAnimation" method="_on_button_pressed"]
+[connection signal="pressed" from="SubmitButton" to="OpEqAnim" method="_on_submit_button_pressed"]
+[connection signal="pressed" from="SubmitButton" to="UIManager" method="_on_submit_button_pressed"]

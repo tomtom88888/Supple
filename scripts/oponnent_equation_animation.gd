@@ -6,22 +6,26 @@ extends Panel
 @onready var timer: Timer = $Timer
 @onready var animation_timer: Timer = $AnimationTimer
 @onready var delay_timer: Timer = $DelayTimer
-@onready var your_equation: LineEdit = %YourEquation
-@onready var your_equation_text: Label = %YourEquationText
+@onready var equation_text: Label = $EquationTitle/EquationText
+@onready var time_text: Label = $Clock/TimeText
 
-var difficulty = 63
+var difficulty = 0
 var current_difficulty = 0
 var animation_running = false  # Tracks if animation is already running
+
 
 func _ready() -> void:
 	#play_animation()
 	pass
 	
 	
-func play_animation():
+func play_animation(difficulty_s, time_to_solve, equation_s):
 	if not animation_running:  # Prevent multiple animations
+		difficulty = difficulty_s
 		animation_running = true
 		current_difficulty = 0  # Ensure start at 0
+		equation_text.text = equation_s
+		time_text.text = str(time_to_solve)
 		difficulty_bar.value = current_difficulty
 		difficulty_text.text = str(current_difficulty)
 		animation_player.play("difficulty_animation_in")
@@ -45,20 +49,12 @@ func _on_animation_timer_timeout() -> void:
 
 
 func reset_difficulty():
-	if not animation_running:
-		print("reset difficulty")
-		delay_timer.start()
+	delay_timer.start()
 
 func _on_delay_timer_timeout() -> void:
-	print("delay timer")
 	animation_player.play("difficulty_animation_out")
 	delay_timer.stop()
+	difficulty = 0
 
-
-func _on_button_pressed() -> void:
-	#print(your_equation.text)
-	#print("also fuck")
-	#your_equation_text.text = your_equation.text
-	#your_equation.placeholder_text = "Solution Goes Here"
-	play_animation()
-	print("fuck")
+func _on_submit_button_pressed() -> void:
+	play_animation(73, 20, "3 * 4 + 1 - 1")

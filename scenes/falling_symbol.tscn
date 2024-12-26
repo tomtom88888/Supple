@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://b0xv5u6uw0qgp"]
+
+[ext_resource type="PhysicsMaterial" uid="uid://d4jd34bjbivxf" path="res://physics_materials/bounce.tres" id="1_0nxu8"]
+[ext_resource type="Script" path="res://scripts/falling_symbol.gd" id="1_1uyy6"]
+[ext_resource type="Texture2D" uid="uid://dehvpd7qebkvf" path="res://sprites/Multiply.png" id="1_80h61"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ntg3m"]
+radius = 92.6553
+
+[node name="FallingSymbol" type="RigidBody2D"]
+mass = 0.5
+physics_material_override = ExtResource("1_0nxu8")
+gravity_scale = 0.1
+script = ExtResource("1_1uyy6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.52549)
+texture = ExtResource("1_80h61")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ntg3m")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
