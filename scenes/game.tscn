@@ -1,8 +1,9 @@
-[gd_scene load_steps=24 format=3 uid="uid://cntutkru2mait"]
+[gd_scene load_steps=26 format=3 uid="uid://cntutkru2mait"]
 
 [ext_resource type="Texture2D" uid="uid://cjdl41dhgb81w" path="res://sprites/HealthBar.png" id="1_1uwvm"]
 [ext_resource type="Script" path="res://scripts/oponnent_equation_animation.gd" id="1_15my4"]
 [ext_resource type="Script" path="res://scripts/yourr_eq_anim.gd" id="1_h3sru"]
+[ext_resource type="Script" path="res://scenes/op_eq_ans_anim.gd" id="1_ohmt2"]
 [ext_resource type="Texture2D" uid="uid://bnhs56vyuaqh" path="res://sprites/DifficultyBarUnderAnimation.png" id="1_p6gv8"]
 [ext_resource type="Texture2D" uid="uid://rto1inbs07ou" path="res://sprites/DifficultyBarAnimation.png" id="2_3i5y8"]
 [ext_resource type="Texture2D" uid="uid://b6k6ues27i2bw" path="res://sprites/PowerUpBar.png" id="2_p353y"]
@@ -53,10 +54,14 @@ tracks/0/keys = {
 "values": [Vector2(0, 0), Vector2(0, -1976)]
 }
 
+[sub_resource type="Animation" id="Animation_rnaco"]
+resource_name = "fade"
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o4aii"]
 _data = {
-"difficulty_animation_in": SubResource("Animation_4rsar"),
-"difficulty_animation_out": SubResource("Animation_4mjl0")
+"animation_screen_in": SubResource("Animation_4rsar"),
+"animation_screen_out": SubResource("Animation_4mjl0"),
+"fade": SubResource("Animation_rnaco")
 }
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k4ioq"]
@@ -72,6 +77,175 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="OpEqAnsAnim" type="Panel" parent="."]
+z_index = 10
+layout_mode = 0
+offset_top = -1976.0
+offset_right = 1080.0
+offset_bottom = -56.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_xk8k3")
+script = ExtResource("1_ohmt2")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="OpEqAnsAnim"]
+libraries = {
+"": SubResource("AnimationLibrary_o4aii")
+}
+
+[node name="Data" type="Control" parent="OpEqAnsAnim"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -540.0
+offset_right = 540.0
+offset_bottom = 1920.0
+grow_horizontal = 2
+
+[node name="IsRight" type="Control" parent="OpEqAnsAnim/Data"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="IsRightText" type="Label" parent="OpEqAnsAnim/Data/IsRight"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 52.5
+offset_top = 334.0
+offset_right = 987.5
+offset_bottom = 670.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(9.62615e-07, 0.823296, 0.231252, 1)
+theme_override_font_sizes/font_size = 111
+text = "wrong"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="IsRightTitle" type="Label" parent="OpEqAnsAnim/Data/IsRight"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 33.0
+offset_top = 105.0
+offset_right = 1007.0
+offset_bottom = 441.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 96
+text = "Your Answer To 
+The Enemy Equation:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimeData" type="Control" parent="OpEqAnsAnim/Data"]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="EnemyTimeSolved" type="Label" parent="OpEqAnsAnim/Data/TimeData"]
+offset_left = 422.0
+offset_top = 674.0
+offset_right = 1160.0
+offset_bottom = 899.0
+theme_override_font_sizes/font_size = 81
+text = "Time Enemy
+ Solved In:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EnemyTime" type="TextureRect" parent="OpEqAnsAnim/Data/TimeData/EnemyTimeSolved"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -117.0
+offset_top = 252.0
+offset_right = 157.0
+offset_bottom = 526.0
+grow_horizontal = 2
+texture = ExtResource("5_khcpc")
+
+[node name="EnemyTimeText" type="Label" parent="OpEqAnsAnim/Data/TimeData/EnemyTimeSolved/EnemyTime"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 86
+text = "60"
+
+[node name="TimeSolved" type="Label" parent="OpEqAnsAnim/Data/TimeData"]
+layout_mode = 0
+offset_left = -91.0
+offset_top = 674.0
+offset_right = 647.0
+offset_bottom = 899.0
+theme_override_font_sizes/font_size = 81
+text = "You Solved
+ It In :"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="YourTime" type="TextureRect" parent="OpEqAnsAnim/Data/TimeData/TimeSolved"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -137.0
+offset_top = 252.0
+offset_right = 137.0
+offset_bottom = 526.0
+grow_horizontal = 2
+texture = ExtResource("5_khcpc")
+
+[node name="YourTimeText" type="Label" parent="OpEqAnsAnim/Data/TimeData/TimeSolved/YourTime"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 86
+text = "60"
+
+[node name="NextEventText" type="Label" parent="OpEqAnsAnim/Data"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -643.0
+offset_top = -637.0
+offset_right = 635.0
+offset_bottom = -128.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 88
+text = "You Didn't Solve the 
+Problem In Time
+ You Took <int> Damage"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="OpEqAnim" type="Panel" parent="."]
 visible = false
@@ -181,7 +355,7 @@ vertical_alignment = 1
 wait_time = 0.5
 
 [node name="Timer" type="Timer" parent="OpEqAnim"]
-wait_time = 0.05
+wait_time = 0.3
 
 [node name="DelayTimer" type="Timer" parent="OpEqAnim"]
 wait_time = 1.5
@@ -216,6 +390,7 @@ theme_override_font_sizes/font_size = 86
 text = "60"
 
 [node name="YourEqAnim" type="Panel" parent="."]
+visible = false
 z_index = 10
 layout_mode = 0
 offset_top = -1976.0
@@ -225,20 +400,93 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_xk8k3")
 script = ExtResource("1_h3sru")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="YourEqAnim"]
-root_node = NodePath("../EqData")
 libraries = {
 "": SubResource("AnimationLibrary_o4aii")
 }
 
-[node name="EqData" type="Node2D" parent="YourEqAnim"]
+[node name="WrongScreen" type="Control" parent="YourEqAnim"]
 visible = false
-position = Vector2(0, -1976)
+layout_mode = 3
+anchors_preset = 0
+offset_top = 1976.0
+offset_right = 40.0
+offset_bottom = 2016.0
 
-[node name="RightWrongTimer" type="Timer" parent="YourEqAnim/EqData"]
-wait_time = 0.1
+[node name="WrongAnswerTitle" type="Label" parent="YourEqAnim/WrongScreen"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 129.0
+offset_top = -1344.0
+offset_right = 911.0
+offset_bottom = -1192.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 111
+text = "Wrong Answer
+"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="AnimationTimer" type="Timer" parent="YourEqAnim/EqData"]
-wait_time = 0.5
+[node name="OpTurnTitle" type="Label" parent="YourEqAnim/WrongScreen"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 73.0
+offset_top = -1062.0
+offset_right = 967.0
+offset_bottom = -865.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 71
+text = "Your Turn Was Transfered
+ To The  Opponent"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="IsRight" type="Control" parent="YourEqAnim"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="IsRightTitle" type="Label" parent="YourEqAnim/IsRight"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 38.0
+offset_top = 469.0
+offset_right = 1002.0
+offset_bottom = 805.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 111
+text = "Your Answer Was:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="IsRightText" type="Label" parent="YourEqAnim/IsRight/IsRightTitle"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -467.5
+offset_top = 316.0
+offset_right = 467.5
+offset_bottom = 652.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(9.62615e-07, 0.823296, 0.231252, 1)
+theme_override_font_sizes/font_size = 111
+text = "wrong"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EqData" type="Control" parent="YourEqAnim"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="Timer" type="Timer" parent="YourEqAnim/EqData"]
 wait_time = 0.035
@@ -246,12 +494,13 @@ wait_time = 0.035
 [node name="DelayTimer" type="Timer" parent="YourEqAnim/EqData"]
 
 [node name="DifficultyTitle" type="Label" parent="YourEqAnim/EqData"]
+layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -518.0
+offset_left = 2.0
 offset_top = 700.0
-offset_right = 524.0
+offset_right = 1044.0
 offset_bottom = 811.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 80
@@ -260,13 +509,14 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="DifficultyBar" type="TextureProgressBar" parent="YourEqAnim/EqData"]
+layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -135.5
+offset_left = 111.5
 offset_top = 854.0
-offset_right = 135.5
-offset_bottom = 997.0
+offset_right = 928.5
+offset_bottom = 1283.0
 grow_horizontal = 2
 texture_under = ExtResource("1_p6gv8")
 texture_progress = ExtResource("2_3i5y8")
@@ -287,12 +537,13 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="EqTitle" type="Label" parent="YourEqAnim/EqData"]
+layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -509.0
+offset_left = 11.0
 offset_top = 150.0
-offset_right = 509.0
+offset_right = 1029.0
 offset_bottom = 261.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 80
@@ -317,12 +568,13 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TimeText" type="Label" parent="YourEqAnim/EqData"]
+layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -509.0
+offset_left = 11.0
 offset_top = 1390.0
-offset_right = 509.0
+offset_right = 1029.0
 offset_bottom = 1501.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 80
@@ -331,12 +583,13 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Clock" type="TextureRect" parent="YourEqAnim/EqData"]
+layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -144.0
+offset_left = 376.0
 offset_top = 1519.0
-offset_right = 130.0
+offset_right = 650.0
 offset_bottom = 1793.0
 grow_horizontal = 2
 texture = ExtResource("5_khcpc")
@@ -357,73 +610,6 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 86
 text = "60"
-
-[node name="IsRight" type="Node2D" parent="YourEqAnim"]
-visible = false
-
-[node name="IsRightTitle" type="Label" parent="YourEqAnim/IsRight"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = 135.5
-offset_top = 469.0
-offset_right = 944.5
-offset_bottom = 805.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 111
-text = "Your Answer Was:"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="IsRightText" type="Label" parent="YourEqAnim/IsRight/IsRightTitle"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -467.5
-offset_top = 316.0
-offset_right = 467.5
-offset_bottom = 652.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(9.62615e-07, 0.823296, 0.231252, 1)
-theme_override_font_sizes/font_size = 111
-text = "wrong"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="WrongScreen" type="Node2D" parent="YourEqAnim"]
-position = Vector2(540, 0)
-
-[node name="WrongAnswerTitle" type="Label" parent="YourEqAnim/WrongScreen"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -391.0
-offset_top = 632.0
-offset_right = 391.0
-offset_bottom = 784.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(1, 0, 0, 1)
-theme_override_font_sizes/font_size = 111
-text = "Wrong Answer
-"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="OpTurnTitle" type="Label" parent="YourEqAnim/WrongScreen"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -447.0
-offset_top = 914.0
-offset_right = 447.0
-offset_bottom = 1111.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 71
-text = "Your Turn Was Transfered
- To The  Opponent"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="BG" type="Panel" parent="."]
 z_index = -5
@@ -677,6 +863,7 @@ offset_bottom = 101.5
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
+mouse_default_cursor_shape = 2
 icon = ExtResource("15_qqb73")
 flat = true
 
@@ -721,8 +908,6 @@ vertical_alignment = 1
 [connection signal="timeout" from="OpEqAnim/AnimationTimer" to="OpEqAnim" method="_on_animation_timer_timeout"]
 [connection signal="timeout" from="OpEqAnim/Timer" to="OpEqAnim" method="_on_timer_timeout"]
 [connection signal="timeout" from="OpEqAnim/DelayTimer" to="OpEqAnim" method="_on_delay_timer_timeout"]
-[connection signal="timeout" from="YourEqAnim/EqData/RightWrongTimer" to="YourEqAnim" method="_on_right_wrong_timer_timeout"]
-[connection signal="timeout" from="YourEqAnim/EqData/AnimationTimer" to="YourEqAnim" method="_on_animation_timer_timeout"]
 [connection signal="timeout" from="YourEqAnim/EqData/Timer" to="YourEqAnim" method="_on_timer_timeout"]
 [connection signal="timeout" from="YourEqAnim/EqData/DelayTimer" to="YourEqAnim" method="_on_delay_timer_timeout"]
 [connection signal="pressed" from="SubmitButton" to="OpEqAnim" method="_on_submit_button_pressed"]
