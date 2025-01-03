@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://e33lurhb5kf0"]
+[gd_scene load_steps=3 format=3 uid="uid://e33lurhb5kf0"]
 
 [ext_resource type="Texture2D" uid="uid://ci2fwbpyilhma" path="res://sprites/BG.png" id="1_bs1do"]
 [ext_resource type="Script" path="res://scripts/falling_objects.gd" id="1_bt5xq"]
-[ext_resource type="Script" path="res://scripts/web_socket_client.gd" id="3_0mfww"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -64,8 +63,5 @@ offset_bottom = 753.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 76
 text = "Player 2"
-
-[node name="WebSocketClient" type="Node2D" parent="."]
-script = ExtResource("3_0mfww")
 
 [connection signal="timeout" from="FallingObjects/SpawnTimer" to="FallingObjects" method="_on_spawn_timer_timeout"]

@@ -3,6 +3,9 @@ extends Node2D
 var socket = WebSocketPeer.new()
 var last_state = WebSocketPeer.STATE_CLOSED
 
+const  roomName = "tea"
+const userName = "Godot"
+
 signal connected_to_server()
 signal connection_closed()
 signal message_received(message: Variant)
@@ -55,5 +58,20 @@ func close(code := 1000, reason := "") -> void:
 func get_socket() -> WebSocketPeer:
 	return socket
 
+func _ready() -> void:
+	connect("connected_to_server", _on_connected_to_server)
+	connect("connection_closed", _connection_closed)
+	connect("message_received", _on_message_received)
+
+func _on_message_received(message: Variant) -> void:
+	print("Recived message:", JSON.parse_string(message))
+	
+func _on_connected_to_server() -> void:
+	var data = {"type": "join", "name": userName}
+	send(JSON.stringify(data))
+
+func _connection_closed() -> void:
+	print("Connection closed")
+	
 func _process(delta: float) -> void:
 	poll()
