@@ -39,9 +39,11 @@ func set_your_health(health: int):
 	if health > your_health_bar.value:
 		while your_health_bar.value > health:
 			your_health_bar.value -= 1
+			await get_tree().create_timer(0.1).timeout
 	else:
 		while your_health_bar.value < health:
 			your_health_bar.value += 1
+			await get_tree().create_timer(0.1).timeout
 	your_health_bar_text.text = str(health)
 
 func set_enemy_health(health: int):

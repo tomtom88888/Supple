@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cjdl41dhgb81w" path="res://sprites/HealthBar.png" id="1_1uwvm"]
 [ext_resource type="Script" path="res://scripts/oponnent_equation_animation.gd" id="1_15my4"]
 [ext_resource type="Script" path="res://scripts/yourr_eq_anim.gd" id="1_h3sru"]
-[ext_resource type="Script" path="res://scenes/op_eq_ans_anim.gd" id="1_ohmt2"]
+[ext_resource type="Script" path="res://scripts/op_eq_ans_anim.gd" id="1_ohmt2"]
 [ext_resource type="Texture2D" uid="uid://bnhs56vyuaqh" path="res://sprites/DifficultyBarUnderAnimation.png" id="1_p6gv8"]
 [ext_resource type="Texture2D" uid="uid://rto1inbs07ou" path="res://sprites/DifficultyBarAnimation.png" id="2_3i5y8"]
 [ext_resource type="Texture2D" uid="uid://b6k6ues27i2bw" path="res://sprites/PowerUpBar.png" id="2_p353y"]
@@ -142,10 +142,12 @@ vertical_alignment = 1
 [node name="TimeData" type="Control" parent="OpEqAnsAnim/Data"]
 modulate = Color(1, 1, 1, 0)
 anchors_preset = 0
+offset_top = -4.0
 offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = 36.0
 
 [node name="EnemyTimeSolved" type="Label" parent="OpEqAnsAnim/Data/TimeData"]
+layout_mode = 0
 offset_left = 422.0
 offset_top = 674.0
 offset_right = 1160.0
@@ -226,26 +228,60 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 86
 text = "60"
 
-[node name="NextEventText" type="Label" parent="OpEqAnsAnim/Data"]
+[node name="Health" type="Control" parent="OpEqAnsAnim/Data"]
 modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1080.0
+offset_bottom = 1920.0
+
+[node name="HealthBar" type="TextureProgressBar" parent="OpEqAnsAnim/Data/Health"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -302.5
+offset_top = 1515.0
+offset_right = 302.5
+offset_bottom = 1829.0
+grow_horizontal = 2
+value = 100.0
+rounded = true
+texture_under = ExtResource("4_kboja")
+texture_progress = ExtResource("1_1uwvm")
+
+[node name="HealthBarText" type="Label" parent="OpEqAnsAnim/Data/Health/HealthBar"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -643.0
-offset_top = -637.0
-offset_right = 635.0
-offset_bottom = -128.0
+offset_left = -69.0
+offset_top = -119.0
+offset_right = 68.0
+offset_bottom = -9.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_font_sizes/font_size = 88
-text = "You Didn't Solve the 
-Problem In Time
- You Took <int> Damage"
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 80
+text = "100"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="HealthTitle" type="Label" parent="OpEqAnsAnim/Data/Health"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -312.0
+offset_top = 1312.0
+offset_right = 312.0
+offset_bottom = 1464.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 111
+text = "Health Left:"
 
 [node name="OpEqAnim" type="Panel" parent="."]
 visible = false
