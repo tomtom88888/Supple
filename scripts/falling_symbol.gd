@@ -4,6 +4,13 @@ extends RigidBody2D
 
 var dragging = false
 
+var sprites_list = [preload("res://sprites/Divide.png"), preload("res://sprites/Multiply.png"), preload("res://sprites/Minus.png"), preload("res://sprites/Plus.png")]
+
+func _ready() -> void:
+	var rng = RandomNumberGenerator.new()
+	sprite_2d.texture = sprites_list[rng.randi_range(0, 3)]
+	rotation = rng.randf_range(0, 360)
+
 func _process(delta):
 	if dragging:
 		var mousepos = get_viewport().get_mouse_position()
