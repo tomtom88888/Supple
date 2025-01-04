@@ -31,7 +31,7 @@ func play_animation(time_solved_in_s: float, time_enemy_solved_in_s: float, is_r
 	is_right = is_right_s
 	health = health_s
 	damage = damage_s
-	enemy_time_text.text = str(time_enemy_solved_in)
+	your_time_text.text = str(time_enemy_solved_in)
 	animation_player.play("animation_screen_in")
 	await get_tree().create_timer(1).timeout
 	right_wrong_aniamtion()
@@ -63,16 +63,16 @@ func turn_data_animation():
 	for i in range(1, 101):
 		time_data_ob.modulate.a = i/100.0
 		var random_time = str(randf_range(time_solved_in - 4, time_solved_in + 4)).substr(0, 3)
-		your_time_text.text = str(random_time)
+		enemy_time_text.text = str(random_time)
 		await get_tree().create_timer(0.01).timeout
 	
 	for i in range(7):
 		var random_time = str(randf_range(time_solved_in - switch_num, time_solved_in + switch_num)).substr(0, 3)
 		switch_num -= 0.5
-		your_time_text.text = str(random_time)
+		enemy_time_text.text = str(random_time)
 		await get_tree().create_timer(time_until_switch).timeout
 		time_until_switch += 0.02
-	your_time_text.text = str(time_solved_in)
+	enemy_time_text.text = str(time_solved_in)
 	await get_tree().create_timer(1).timeout
 
 	var current_health = damage + health

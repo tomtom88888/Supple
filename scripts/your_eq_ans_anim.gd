@@ -1,37 +1,34 @@
 extends Panel
 
 var time_solved_in
-var time_enemy_solved_in
 var is_right
-var health
-var damage
+var difficulty
 @onready var time_data_ob: Control = $Data/TimeData
 @onready var is_right_ob: Control = $Data/IsRight
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var is_right_text: Label = $Data/IsRight/IsRightText
 @onready var your_time_text: Label = $Data/TimeData/TimeSolved/YourTime/YourTimeText
-@onready var enemy_time_text: Label = $Data/TimeData/EnemyTimeSolved/EnemyTime/EnemyTimeText
-@onready var health_bar: TextureProgressBar = $Data/Health/HealthBar
 @onready var health_bar_text: Label = $Data/Health/HealthBar/HealthBarText
-@onready var health_ob: Control = $Data/Health
-
+@onready var difficulty_bar: TextureProgressBar = $Data/Difficulty/DifficultyBar
+@onready var difficulty_text: Label = $Data/Difficulty/DifficultyBar/DifficultyText
+@onready var difficulty_ob: Control = $Data/Difficulty
+@onready var wrong_screen_ob: Control = $Data/WrongScreen
 
 func _ready() -> void:
 	pass
-	#play_animation(5, 6, true, 80, 20)
+	#play_animation(6, false, 20)
 	
 	
-func play_animation(time_solved_in_s: float, time_enemy_solved_in_s: float, is_right_s: bool, health_s: int, damage_s: int):
+func play_animation(time_solved_in_s: float, is_right_s: bool, difficulty_s: int):
 	animation_player.play("animation_screen_in")
 	is_right_ob.modulate = Color(1, 1, 1, 1)
 	time_data_ob.modulate = Color(1, 1, 1, 0)
-	health_ob.modulate = Color(1, 1, 1, 0)
-	time_enemy_solved_in = time_enemy_solved_in_s
-	time_solved_in = time_enemy_solved_in_s
+	difficulty_ob.modulate = Color(1, 1, 1, 0)
+	wrong_screen_ob.modulate = Color(1, 1, 1, 0)
+	difficulty_bar.value = 0
+	time_solved_in = time_solved_in_s
 	is_right = is_right_s
-	health = health_s
-	damage = damage_s
-	enemy_time_text.text = str(time_enemy_solved_in)
+	difficulty = difficulty_s
 	animation_player.play("animation_screen_in")
 	await get_tree().create_timer(1).timeout
 	right_wrong_aniamtion()
@@ -54,7 +51,14 @@ func right_wrong_aniamtion() -> void:
 		is_right_text.text = "wrong"
 		is_right_text.add_theme_color_override("font_color", Color.RED)
 	await get_tree().create_timer(0.5).timeout
-	turn_data_animation()
+	if is_right:
+		turn_data_animation()
+	else:
+		for i in range(1, 101):
+			wrong_screen_ob.modulate.a = i/100.0
+			await get_tree().create_timer(0.01).timeout
+		animation_player.play("animation_screen_out")
+
 
 func turn_data_animation():
 	var time_until_switch = 0.01
@@ -70,31 +74,20 @@ func turn_data_animation():
 		var random_time = str(randf_range(time_solved_in - switch_num, time_solved_in + switch_num)).substr(0, 3)
 		switch_num -= 0.5
 		your_time_text.text = str(random_time)
-		await get_tree().create_timer(time_until_switch).timeout
-		time_until_switch += 0.02
+		await get_tree().create_timer(0.01).timeout
 	your_time_text.text = str(time_solved_in)
 	await get_tree().create_timer(1).timeout
 
-	var current_health = damage + health
 	for i in range(1, 101):
-		health_ob.modulate.a = i/100.0
-		print(health_ob.modulate.a)
+		difficulty_ob.modulate.a = i/100.0
 		await get_tree().create_timer(0.01).timeout
 	
-	if current_health > health:
-		while current_health > health:
-			current_health -= 1
-			health_bar.value = current_health
-			health_bar_text.text = str(current_health)
-			await get_tree().create_timer(0.1).timeout
-	elif current_health < health_bar.value:
-		while current_health < health_bar.value:
-			current_health += 1
-			health_bar.value = current_health
-			health_bar_text.text = str(current_health)
-			await get_tree().create_timer(0.1).timeout
-			
-	health_bar_text.text = str(health)
+	while difficulty > difficulty_bar.value:
+		difficulty_bar.value += 1
+		difficulty_text.text = str(difficulty_bar.value)
+		await get_tree().create_timer(0.05).timeout
+	difficulty_bar.value = difficulty
+	difficulty_text.text = str(difficulty)
 	
 	await get_tree().create_timer(2).timeout
 	

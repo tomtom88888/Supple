@@ -1,9 +1,9 @@
-[gd_scene load_steps=29 format=3 uid="uid://cntutkru2mait"]
+[gd_scene load_steps=26 format=3 uid="uid://cntutkru2mait"]
 
 [ext_resource type="Texture2D" uid="uid://cjdl41dhgb81w" path="res://sprites/HealthBar.png" id="1_1uwvm"]
 [ext_resource type="Script" path="res://scripts/op_eq_ans_anim.gd" id="1_ohmt2"]
-[ext_resource type="Script" path="res://scripts/op_eq_anim.gd" id="1_p4ovs"]
-[ext_resource type="Script" path="res://scripts/your_eq_ans_anim.gd" id="1_weo7i"]
+[ext_resource type="Script" path="res://scenes/op_eq_anim.gd" id="1_p4ovs"]
+[ext_resource type="Script" path="res://scenes/your_eq_ans_anim.gd" id="1_weo7i"]
 [ext_resource type="FontFile" uid="uid://c4vb2s2xdy8ma" path="res://fonts/Outfit-ExtraBold.ttf" id="2_dtfsr"]
 [ext_resource type="Texture2D" uid="uid://c4rlqltrb4l7o" path="res://sprites/EnemyHealthBarUnder.png" id="3_ogkdd"]
 [ext_resource type="Texture2D" uid="uid://csawjxwjg75vl" path="res://sprites/GameDataBar.png" id="4_3e3ya"]
@@ -14,7 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://dlsonc30ecwvh" path="res://sprites/clock.png" id="5_khcpc"]
 [ext_resource type="Texture2D" uid="uid://w0ibc0uudn1x" path="res://sprites/DifficultyBar.png" id="5_n1bf3"]
 [ext_resource type="Script" path="res://scripts/ui_manager.gd" id="7_ukaty"]
-[ext_resource type="Script" path="res://scripts/op_ans_your_eq_anim.gd" id="8_f7wex"]
+[ext_resource type="Script" path="res://scenes/op_ans_your_eq_anim.gd" id="8_f7wex"]
 [ext_resource type="Texture2D" uid="uid://bljycfj165j1e" path="res://sprites/DifficultyBarUnder.png" id="10_4ai41"]
 [ext_resource type="Texture2D" uid="uid://c1eo24dl8070n" path="res://Group 2.png" id="15_qqb73"]
 [ext_resource type="Script" path="res://scripts/your_equation.gd" id="17_wkae4"]
@@ -69,54 +69,6 @@ bg_color = Color(0.868985, 0.868985, 0.868985, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kf3su"]
 bg_color = Color(0, 0, 0, 1)
-
-[sub_resource type="Animation" id="Animation_mso41"]
-resource_name = "EquationNotValidAnim"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.0331991, 0.0631991, 0.0931991, 0.123199, 0.153199, 0.176532, 0.206532, 0.236532, 0.266532, 0.291842, 0.321842, 0.351842, 0.381842, 0.405175, 0.435175, 0.465175, 0.495175),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(43, 1237), Vector2(63, 1237), Vector2(43, 1237), Vector2(23, 1237), Vector2(43, 1237), Vector2(63, 1237), Vector2(43, 1237), Vector2(23, 1237), Vector2(43, 1237), Vector2(63, 1237), Vector2(43, 1237), Vector2(23, 1237), Vector2(43, 1237), Vector2(63, 1237), Vector2(43, 1237), Vector2(23, 1237), Vector2(43, 1237)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
-[sub_resource type="Animation" id="Animation_3iup0"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_lk0ne"]
-_data = {
-"EquationNotValidAnim": SubResource("Animation_mso41"),
-"RESET": SubResource("Animation_3iup0")
-}
 
 [node name="GameUI" type="Control"]
 layout_mode = 3
@@ -327,8 +279,6 @@ anchor_bottom = 1.0
 offset_left = 540.0
 offset_right = -500.0
 offset_bottom = -1880.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="EquationText" type="Label" parent="OpEqAnim/Data/Equation"]
 layout_mode = 1
@@ -553,7 +503,6 @@ vertical_alignment = 1
 
 [node name="OpAnsYourEqAnim" type="Panel" parent="."]
 z_index = 10
-layout_mode = 0
 offset_top = -1976.0
 offset_right = 1080.0
 offset_bottom = -56.0
@@ -1176,41 +1125,21 @@ vertical_alignment = 1
 
 [node name="SubmitButton" type="Button" parent="."]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
+anchor_bottom = 0.5
 offset_left = -170.5
-offset_top = 858.5
+offset_top = -101.5
 offset_right = 170.5
-offset_bottom = 1061.5
+offset_bottom = 101.5
 grow_horizontal = 2
+grow_vertical = 2
 focus_mode = 0
 mouse_default_cursor_shape = 2
 icon = ExtResource("15_qqb73")
 flat = true
-
-[node name="EquationNotValidAnim" type="Label" parent="."]
-visible = false
-z_index = 5
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 43.0
-offset_top = 277.0
-offset_right = 1044.0
-offset_bottom = 417.0
-grow_vertical = 2
-theme_override_colors/font_color = Color(100, 0, 0, 1)
-theme_override_font_sizes/font_size = 100
-text = "Equation Not Valid!"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="EquationNotValidAnim"]
-libraries = {
-"": SubResource("AnimationLibrary_lk0ne")
-}
 
 [node name="YourEquation" type="LineEdit" parent="."]
 unique_name_in_owner = true
@@ -1248,5 +1177,3 @@ theme_override_font_sizes/font_size = 76
 text = "Your Equation:"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[connection signal="pressed" from="SubmitButton" to="." method="_on_submit_button_pressed"]

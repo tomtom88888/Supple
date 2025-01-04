@@ -29,6 +29,10 @@ window/handheld/orientation=1
 version_control/plugin_name="GitPlugin"
 version_control/autoload_on_startup=true
 
+[gui]
+
+theme/custom_font="res://fonts/Outfit-ExtraBold.ttf"
+
 [input]
 
 Drag={
