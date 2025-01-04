@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scripts/scene_handler.gd" id="1_ttnyq"]
 [ext_resource type="Script" path="res://scripts/web_socket_client.gd" id="2_fbfoc"]
 
-[node name="SceneHandler" type="Control"]
+[node name="SceneHandler" type="Control" node_paths=PackedStringArray("current_scene")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,9 +12,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ttnyq")
+current_scene = NodePath("MainMenu")
 
-[node name="MainMenu" parent="." instance=ExtResource("1_i8dd0")]
+[node name="MainMenu" parent="." node_paths=PackedStringArray("WebSocketManager") instance=ExtResource("1_i8dd0")]
 layout_mode = 1
+WebSocketManager = NodePath("../WebSocketsManager")
 
 [node name="WebSocketsManager" type="Node2D" parent="." node_paths=PackedStringArray("http_request")]
 script = ExtResource("2_fbfoc")

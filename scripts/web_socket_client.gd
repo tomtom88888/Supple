@@ -7,13 +7,17 @@ var found_match
 
 @export var http_request: HTTPRequest
 
-const  roomName = "tea"
-const userName = "Godot"
+const ip = "0"
 
 signal connected_to_server()
 signal connection_closed()
 signal message_received(message: Variant)
 
+var your_player_id
+var game_started
+var enemy_attack_time = 0
+var game
+var your_attack_time
 
 func poll() -> void:
 	if socket.get_ready_state() != socket.STATE_CLOSED:
@@ -71,7 +75,26 @@ func _ready() -> void:
 
 func _on_message_received(message: Variant) -> void:
 	var json = JSON.parse_string(message)
-	
+	if json["action"] == "start":
+		game_started = true
+		your_player_id = json["id"]
+		game = get_parent().switch_scene_and_return(load("res://scenes/game.tscn"))
+	if game_started:
+		if json["action"] == "update_turn":
+			game.turn_type = json["turn"]
+		if json["action"] == "submitted_equation":
+			if json["player"] == your_player_id:
+				game.on_attack_answer_submitted(json["time"], json["correct"], json["difficulty"])
+				enemy_attack_time = json["time"]
+			else:
+				game.on_opponent_attack_answer_submitted(json["time"], json["correct"], json["difficulty"], json["original_equation"])
+				your_attack_time = json["time"]
+		elif json["action"] == "submitted_defense":
+			if json["player"] == your_player_id:
+				game.on_defense_answer_submitted(json["time"], enemy_attack_time, json["correct"], json["health"], json["damage"])
+			else:
+				game.on_opponent_defense_answer_submitted(json["time"], your_attack_time, json["correct"], json["health"], json["damage"])
+				
 func _on_connected_to_server() -> void:
 	pass
 
@@ -87,5 +110,5 @@ func send_join_rquest():
 func _on_request_completed(result, response_code, headers, body):
 	var json = JSON.parse_string(body.get_string_from_utf8())
 	join_adress = json["join_adress"]
-	connect_to_url(join_adress)
-	get_parent().switch_scene(load("res://scenes/game.tscn"))
+	connect_to_url("ws://" + ip + "/ws/" + join_adress)
+	get_parent().switch_scene(load("res://scenes/finding_match.tscn"))

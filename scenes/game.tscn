@@ -362,6 +362,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="YourEqAnim" type="Panel" parent="."]
+visible = false
 z_index = 10
 layout_mode = 0
 offset_top = -1976.0
@@ -914,7 +915,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TimeData" type="Control" parent="YourAnsOpEqAnim/Data"]
-modulate = Color(1, 1, 1, 0)
 anchors_preset = 0
 offset_top = -4.0
 offset_right = 40.0
@@ -1333,5 +1333,6 @@ vertical_alignment = 1
 
 [connection signal="current_animation_changed" from="OpEqAnim/OpEqAnimationPlayer" to="." method="_on_op_eq_animation_player_current_animation_changed"]
 [connection signal="current_animation_changed" from="YourEqAnim/YourEqAnimationPlayer" to="." method="_on_your_eq_animation_player_current_animation_changed"]
+[connection signal="current_animation_changed" from="YourEqAnsAnim/YourEqAnsAnimationPlayer" to="." method="_on_your_eq_ans_animation_player_current_animation_changed"]
 [connection signal="current_animation_changed" from="YourAnsOpEqAnim/YourAnsOpEqAnimationPlayer" to="." method="_on_your_ans_op_eq_animation_player_current_animation_changed"]
 [connection signal="pressed" from="SubmitButton" to="." method="_on_submit_button_pressed"]

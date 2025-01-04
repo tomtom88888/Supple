@@ -22,38 +22,42 @@ var current_time = 0
 var enemy_time = 0
 var submitted_equation
 var equation
+var enemy_equation
+var your_attack_time
 
 func _process(delta: float) -> void:
 	if turn_type == "defend":
+		set_enemy_equation(enemy_equation)
 		current_time = TimeElapsed.time_elapsed - prev_time
 		if current_time > enemy_time:
 			pass
 			#send to beck answer wrong
-			
-func _on_opponent_attack_answer_submitted(time_solved_in_s: float, is_right_s: bool, difficulty_s: int, equation_s: String):
-	op_eq_anim.play_animation(time_solved_in_s, is_right_s, difficulty_s, equation_s)
-	if is_right_s:
-		turn_type = "defend"
-		stop_timer = false
-		set_enemy_equation(equation_s)
-	else:
-		turn_type = "attack"
-		stop_timer = false
+	if turn_type == "attack":
 		set_enemy_equation("It Is Now Your Turn To Attack")
+			
+func on_opponent_attack_answer_submitted(time_solved_in_s: float, is_right_s: bool, difficulty_s: int, equation_s: String):
+	op_eq_anim.play_animation(time_solved_in_s, is_right_s, difficulty_s, equation_s)
+	enemy_equation = equation_s
+	enemy_time = time_solved_in_s
 		
 func _on_op_eq_animation_player_current_animation_changed(name: String) -> void:
 	if name == "animation_screen_out":
 		prev_time = TimeElapsed.time_elapsed
+		count_down(enemy_time)
 
-func _on_attack_answer_submitted(time_solved_in_s: float, is_right_s: bool, difficulty_s: int):
-	turn_type = "wait"
+
+func on_attack_answer_submitted(time_solved_in_s: float, is_right_s: bool, difficulty_s: int):
 	var time_took_to_solve = current_time
 	your_eq_ans_anim.play_animation(time_solved_in_s, is_right_s, difficulty_s)
 	stop_timer = false
+	your_attack_time = time_solved_in_s
 	set_difficulty(difficulty_s)
 
-func _on_defense_answer_submitted(time_solved_in_s: float, time_enemy_solved_in_s: float, is_right_s: bool, health_s: int, damage_s: int):
-	turn_type = "attack"
+func _on_your_eq_ans_animation_player_current_animation_changed(name: String) -> void:
+	if name == "animation_screen_out":
+		count_down(your_attack_time)
+
+func on_defense_answer_submitted(time_solved_in_s: float, time_enemy_solved_in_s: float, is_right_s: bool, health_s: int, damage_s: int):
 	#make timing logic
 	your_ans_op_eq_anim.play_animation(time_solved_in_s, time_enemy_solved_in_s, is_right_s, health_s, damage_s)
 	equation_writing_timer()
@@ -63,8 +67,7 @@ func _on_your_ans_op_eq_animation_player_current_animation_changed(name: String)
 	if name == "animation_screen_out":
 		prev_time = TimeElapsed.time_elapsed
 
-func _on_opponent_defense_answer_submitted(time_solved_in_s: float, time_enemy_solved_in_s: float, is_right_s: bool, health_s: int, damage_s: int):
-	turn_type = "wait"
+func on_opponent_defense_answer_submitted(time_solved_in_s: float, time_enemy_solved_in_s: float, is_right_s: bool, health_s: int, damage_s: int):
 	op_ans_your_eq_anim.play_animation(time_solved_in_s, time_enemy_solved_in_s, is_right_s, health_s, damage_s)
 	equation_writing_timer()
 	set_enemy_health(health_s, damage_s)
