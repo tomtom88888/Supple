@@ -26,21 +26,26 @@ var submitted_equation
 var equation
 var enemy_equation
 var your_attack_time
+var timer_on
+
 
 func _ready() -> void:
-	print(your_ans_op_eq_anim)
-	your_ans_op_eq_anim.play_animation(50, 5, true, 80, 20)
+	submitted_equation = false
 
 func _process(delta: float) -> void:
-	if turn_type == "defend":
+	if turn_type == "defend" and prev_time != null:
 		set_enemy_equation(enemy_equation)
-		current_time = TimeElapsed.time_elapsed - prev_time
-		if current_time > enemy_time:
-			pass
-			#send to beck answer wrong
+		#to much time
+		#current_time = TimeElapsed.time_elapsed - prev_time
+		#if current_time > enemy_time:
+			#web_sockets_manager.send(JSON.stringify({"player": web_sockets_manager.your_player_id, "time": 0, "action": "submit_defend", "solution": str(-9488961.42524)}))
 	if turn_type == "attack":
 		set_enemy_equation("It Is Now Your Turn To Attack")
-			
+		if not timer_on:
+			equation_writing_timer()
+			timer_on = true
+	else:
+		timer_on = false
 func on_opponent_attack_answer_submitted(time_solved_in_s: float, is_right_s: bool, difficulty_s: int, equation_s: String):
 	op_eq_anim.play_animation(time_solved_in_s, is_right_s, difficulty_s, equation_s)
 	enemy_equation = equation_s
@@ -98,7 +103,7 @@ func set_enemy_health(health, damage):
 func count_down(time):
 	var current_time = time
 	while current_time > 0:
-		time_text.text = current_time
+		time_text.text = str(current_time)
 		time -= 0.01
 		await get_tree().create_timer(0.01).timeout
 
@@ -129,10 +134,11 @@ func set_difficulty(difficulty):
 		await get_tree().create_timer(0.05).timeout
 	difficulty_bar.value = difficulty
 	difficulty_text.text = str(difficulty)
+	
 func set_time(time):
 	var current_time = 0
 	while current_time < time:
-		time_text.text = current_time
+		time_text.text = str(current_time)
 		current_time += 0.1
 		await get_tree().create_timer(0.1).timeout
 	time_text.text = current_time
@@ -140,12 +146,15 @@ func set_time(time):
 func equation_writing_timer():
 	var current_time = 60
 	while current_time > 0:
-		time_text.text = current_time
+		time_text.text = str(current_time)
 		if stop_timer == true:
-			break
+			return
 		await get_tree().create_timer(1).timeout
 		current_time -= 1
-		
+	if turn_type == "attack":
+		web_sockets_manager.send(JSON.stringify({"player": web_sockets_manager.your_player_id, "time": 0, "action": "submit_equation", "equation": "0 = 1"}))
+
+
 func equation_not_valid():
 	not_valid_animation_player.play("EquationNotValidAnim")
 	
@@ -171,7 +180,7 @@ func _on_submit_button_pressed() -> void:
 					return
 			var time_took_to_solve = TimeElapsed.time_elapsed - prev_time
 			submitted_equation = false
-			web_sockets_manager.send(JSON.stringify({"player": web_sockets_manager.your_player_id, "time": time_took_to_solve, "action": "submit_equation", "equation": str(equation) + " = " + str(answer)}))
+			web_sockets_manager.send(JSON.stringify({"player": web_sockets_manager.your_player_id, "time": snappedf(time_took_to_solve, 0.01), "action": "submit_equation", "equation": str(equation) + " = " + str(answer)}))
 			your_equation_text.text = "Your Equation:"
 	elif turn_type == "defend":
 		var answer = your_equation.text
@@ -185,4 +194,5 @@ func _on_submit_button_pressed() -> void:
 
 func _on_your_eq_animation_player_current_animation_changed(name: String) -> void:
 	if name == "animation_screen_out":
+		print("out")
 		prev_time = TimeElapsed.time_elapsed

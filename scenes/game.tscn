@@ -128,6 +128,45 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("7_ukaty")
 
+[node name="GameStartedAnim" type="Panel" parent="."]
+process_mode = 4
+visible = false
+z_index = 10
+offset_top = -4146.0
+offset_right = 1080.0
+offset_bottom = -2226.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_xk8k3")
+
+[node name="GameStartedAnimationPlayer" type="AnimationPlayer" parent="GameStartedAnim"]
+libraries = {
+"": SubResource("AnimationLibrary_o4aii")
+}
+
+[node name="Data" type="Control" parent="GameStartedAnim"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -540.0
+offset_right = 540.0
+offset_bottom = 1920.0
+grow_horizontal = 2
+
+[node name="TurnTypeTitle" type="Label" parent="GameStartedAnim/Data"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -235.5
+offset_top = 777.0
+offset_right = 235.5
+offset_bottom = 910.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 100
+text = " You Start Attacking"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="OpEqAnim" type="Panel" parent="."]
 z_index = 10
 layout_mode = 0
@@ -187,7 +226,7 @@ grow_horizontal = 2
 theme_override_fonts/font = ExtResource("2_dtfsr")
 theme_override_font_sizes/font_size = 105
 text = "Your Opponenet's
-Answer To Your
+Answer To Their
 Equation Was:"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1326,6 +1365,7 @@ text = "Your Equation:"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[connection signal="current_animation_changed" from="GameStartedAnim/GameStartedAnimationPlayer" to="." method="_on_op_eq_animation_player_current_animation_changed"]
 [connection signal="current_animation_changed" from="OpEqAnim/OpEqAnimationPlayer" to="." method="_on_op_eq_animation_player_current_animation_changed"]
 [connection signal="current_animation_changed" from="YourEqAnim/YourEqAnimationPlayer" to="." method="_on_your_eq_animation_player_current_animation_changed"]
 [connection signal="current_animation_changed" from="YourEqAnsAnim/YourEqAnsAnimationPlayer" to="." method="_on_your_eq_ans_animation_player_current_animation_changed"]

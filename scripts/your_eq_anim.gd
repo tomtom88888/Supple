@@ -7,7 +7,7 @@ var difficulty
 @onready var equation_text: Label = $Data/Equation/EquationText
 
 func _ready() -> void:
-	play_animation("5 * 3")
+	pass
 	
 	
 func play_animation(equation_s: String):

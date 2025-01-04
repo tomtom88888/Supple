@@ -18,7 +18,6 @@ var equation
 
 func _ready() -> void:
 	pass
-	#play_animation(6, true, 20, "5 * 3")
 	
 func play_animation(time_solved_in_s: float, is_right_s: bool, difficulty_s: int, equation_s: String):
 	animation_player.play("animation_screen_in")
@@ -32,6 +31,7 @@ func play_animation(time_solved_in_s: float, is_right_s: bool, difficulty_s: int
 	is_right = is_right_s
 	difficulty = difficulty_s
 	equation = equation_s
+	equation_text.text = str(equation)
 	animation_player.play("animation_screen_in")
 	await get_tree().create_timer(1).timeout
 	right_wrong_aniamtion()
