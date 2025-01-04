@@ -45,9 +45,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -396.0
-offset_top = 1003.0
+offset_top = 955.0
 offset_right = 396.0
-offset_bottom = 1241.0
+offset_bottom = 1193.0
 grow_horizontal = 2
 texture_normal = ExtResource("3_m5plc")
 
@@ -64,8 +64,9 @@ offset_right = 42.0
 offset_bottom = 10.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(0.84697, 0.863628, 0.28619, 1)
 theme_override_font_sizes/font_size = 126
-text = "Find Match"
+text = "Turnoment"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -94,5 +95,7 @@ theme_override_font_sizes/font_size = 126
 text = "Find Match"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
 
 [connection signal="timeout" from="FallingObjects/SpawnTimer" to="FallingObjects" method="_on_spawn_timer_timeout"]

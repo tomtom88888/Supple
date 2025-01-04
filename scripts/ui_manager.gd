@@ -1,5 +1,6 @@
 extends Control
 
+@onready var your_eq_anim: Panel = $YourEqAnim
 @onready var not_valid_animation_player: AnimationPlayer = $EquationNotValidAnim/AnimationPlayer
 @onready var your_equation: LineEdit = %YourEquation
 @onready var difficulty_text: Label = $GameDataBar/DifficultyBar/DifficultyText
@@ -15,28 +16,59 @@ extends Control
 @onready var your_health_bar_text: Label = $YourHealthBar/YourHealthBarText
 @onready var op_ans_your_eq_anim: Panel = $OpAnsYourEqAnim
 var stop_timer
+var prev_time
+var turn_type = ""
+var current_time = 0
+var enemy_time = 0
+var submitted_equation
+var equation
 
-func _on_opponent_submited_equation(time_solved_in_s: float, is_right_s: bool, difficulty_s: int, equation_s: String):
+func _process(delta: float) -> void:
+	if turn_type == "defend":
+		current_time = TimeElapsed.time_elapsed - prev_time
+		if current_time > enemy_time:
+			pass
+			#send to beck answer wrong
+			
+func _on_opponent_attack_answer_submitted(time_solved_in_s: float, is_right_s: bool, difficulty_s: int, equation_s: String):
 	op_eq_anim.play_animation(time_solved_in_s, is_right_s, difficulty_s, equation_s)
-	stop_timer = false
-	set_enemy_equation(equation_s)
-	count_down(time_solved_in_s)
+	if is_right_s:
+		turn_type = "defend"
+		stop_timer = false
+		set_enemy_equation(equation_s)
+	else:
+		turn_type = "attack"
+		stop_timer = false
+		set_enemy_equation("It Is Now Your Turn To Attack")
+		
+func _on_op_eq_animation_player_current_animation_changed(name: String) -> void:
+	if name == "animation_screen_out":
+		prev_time = TimeElapsed.time_elapsed
 
-func _on_equation_submitted(time_solved_in_s: float, is_right_s: bool, difficulty_s: int):
+func _on_attack_answer_submitted(time_solved_in_s: float, is_right_s: bool, difficulty_s: int):
+	turn_type = "wait"
+	var time_took_to_solve = current_time
 	your_eq_ans_anim.play_animation(time_solved_in_s, is_right_s, difficulty_s)
 	stop_timer = false
-	count_down(time_solved_in_s)
 	set_difficulty(difficulty_s)
 
-func _on_answer_submitted(time_solved_in_s: float, time_enemy_solved_in_s: float, is_right_s: bool, health_s: int, damage_s: int):
+func _on_defense_answer_submitted(time_solved_in_s: float, time_enemy_solved_in_s: float, is_right_s: bool, health_s: int, damage_s: int):
+	turn_type = "attack"
+	#make timing logic
 	your_ans_op_eq_anim.play_animation(time_solved_in_s, time_enemy_solved_in_s, is_right_s, health_s, damage_s)
 	equation_writing_timer()
 	set_health(health_s, damage_s)
 
-func _on_opponent_answer_submitted(time_solved_in_s: float, time_enemy_solved_in_s: float, is_right_s: bool, health_s: int, damage_s: int):
+func _on_your_ans_op_eq_animation_player_current_animation_changed(name: String) -> void:
+	if name == "animation_screen_out":
+		prev_time = TimeElapsed.time_elapsed
+
+func _on_opponent_defense_answer_submitted(time_solved_in_s: float, time_enemy_solved_in_s: float, is_right_s: bool, health_s: int, damage_s: int):
+	turn_type = "wait"
 	op_ans_your_eq_anim.play_animation(time_solved_in_s, time_enemy_solved_in_s, is_right_s, health_s, damage_s)
 	equation_writing_timer()
 	set_enemy_health(health_s, damage_s)
+
 
 func set_enemy_health(health, damage):
 	var current_health = health + damage
@@ -109,14 +141,35 @@ func equation_not_valid():
 	print("not valid")
 	
 func _on_submit_button_pressed() -> void:
-	#send equation and time to beckend
-	stop_timer = true
-	print("submit")
-	var equation = your_equation.text
-	for c in equation:
-		if c not in "+-/*0123456789.=() ":
-			equation_not_valid()
-			return
-	print("Equation:", equation)
-	your_equation.text = ""
-	
+	if turn_type == "attack":
+		if submitted_equation:
+			stop_timer = true
+			print("submit")
+			equation = your_equation.text
+			for c in equation:
+				if c not in "+-/*0123456789.=() ":
+					equation_not_valid()
+					return
+			print("Equation:", equation)
+			your_equation.text = ""
+			your_eq_anim.play_aniamtion(equation)
+		else:
+			var answer = your_equation.text
+			for c in answer:
+				if c not in "0123456789.":
+					equation_not_valid()
+					return
+			var time_took_to_solve = TimeElapsed.time_elapsed - prev_time
+			#send answer and equation to beckend
+	elif turn_type == "defend":
+		var answer = your_equation.text
+		for c in answer:
+			if c not in "0123456789.":
+				equation_not_valid()
+				return
+		var time_took_to_solve = TimeElapsed.time_elapsed - prev_time
+		#send answer to beckend
+
+func _on_your_eq_animation_player_current_animation_changed(name: String) -> void:
+	if name == "animation_screen_out":
+		prev_time = TimeElapsed.time_elapsed

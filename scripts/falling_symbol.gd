@@ -1,8 +1,9 @@
 extends RigidBody2D
 
+@onready var sprite_2d: Sprite2D = $Sprite2D
+
 var dragging = false
 
-	
 func _process(delta):
 	if dragging:
 		var mousepos = get_viewport().get_mouse_position()

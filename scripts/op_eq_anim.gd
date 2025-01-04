@@ -6,7 +6,7 @@ var difficulty
 var equation
 @onready var time_data_ob: Control = $Data/TimeData
 @onready var is_right_ob: Control = $Data/IsRight
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var animation_player: AnimationPlayer = $OpEqAnimationPlayer
 @onready var is_right_text: Label = $Data/IsRight/IsRightText
 @onready var your_time_text: Label = $Data/TimeData/TimeSolved/YourTime/YourTimeText
 @onready var health_bar_text: Label = $Data/Health/HealthBar/HealthBarText
@@ -14,8 +14,8 @@ var equation
 @onready var difficulty_text: Label = $Data/Difficulty/DifficultyBar/DifficultyText
 @onready var wrong_screen_ob: Control = $Data/WrongScreen
 @onready var difficulty_ob: Control = $Data/Difficulty
-@onready var equation_text: Label = $"../OpEqAnim/Data/Equation/EquationText"
-@onready var equation_ob: Control = $"../OpEqAnim/Data/Equation"
+@onready var equation_text: Label = $"Data/Equation/EquationText"
+@onready var equation_ob: Control = $"Data/Equation"
 
 func _ready() -> void:
 	pass

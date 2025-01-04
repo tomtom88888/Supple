@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="supple"
-run/main_scene="res://scenes/game.tscn"
+run/main_scene="res://scenes/SceneHandler.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
 config/icon="res://icon.svg"
+
+[autoload]
+
+TimeElapsed="*res://scripts/time.gd"
 
 [display]
 

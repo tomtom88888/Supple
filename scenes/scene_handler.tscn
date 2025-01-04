@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://biebd6n3jy551"]
+
+[ext_resource type="PackedScene" uid="uid://e33lurhb5kf0" path="res://scenes/main_menu.tscn" id="1_i8dd0"]
+[ext_resource type="Script" path="res://scripts/scene_handler.gd" id="1_ttnyq"]
+[ext_resource type="Script" path="res://scripts/web_socket_client.gd" id="2_fbfoc"]
+
+[node name="SceneHandler" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ttnyq")
+
+[node name="MainMenu" parent="." instance=ExtResource("1_i8dd0")]
+layout_mode = 1
+
+[node name="WebSocketsManager" type="Node2D" parent="." node_paths=PackedStringArray("http_request")]
+script = ExtResource("2_fbfoc")
+http_request = NodePath("../HTTPRequest")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]

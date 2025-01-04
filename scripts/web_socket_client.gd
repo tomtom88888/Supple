@@ -2,6 +2,10 @@ extends Node2D
 
 var socket = WebSocketPeer.new()
 var last_state = WebSocketPeer.STATE_CLOSED
+var join_adress
+var found_match
+
+@export var http_request: HTTPRequest
 
 const  roomName = "tea"
 const userName = "Godot"
@@ -9,6 +13,7 @@ const userName = "Godot"
 signal connected_to_server()
 signal connection_closed()
 signal message_received(message: Variant)
+
 
 func poll() -> void:
 	if socket.get_ready_state() != socket.STATE_CLOSED:
@@ -62,16 +67,25 @@ func _ready() -> void:
 	connect("connected_to_server", _on_connected_to_server)
 	connect("connection_closed", _connection_closed)
 	connect("message_received", _on_message_received)
+	http_request.request_completed.connect(_on_request_completed)
 
 func _on_message_received(message: Variant) -> void:
-	print("Recived message:", JSON.parse_string(message))
+	var json = JSON.parse_string(message)
 	
 func _on_connected_to_server() -> void:
-	var data = {"type": "join", "name": userName}
-	send(JSON.stringify(data))
+	pass
 
 func _connection_closed() -> void:
 	print("Connection closed")
 	
 func _process(delta: float) -> void:
 	poll()
+
+func send_join_rquest():
+	http_request.request("https://api.github.com/repos/godotengine/godot/releases/latest")
+
+func _on_request_completed(result, response_code, headers, body):
+	var json = JSON.parse_string(body.get_string_from_utf8())
+	join_adress = json["join_adress"]
+	connect_to_url(join_adress)
+	get_parent().switch_scene(load("res://scenes/game.tscn"))

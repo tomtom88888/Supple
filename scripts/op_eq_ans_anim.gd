@@ -7,7 +7,7 @@ var health
 var damage
 @onready var time_data_ob: Control = $Data/TimeData
 @onready var is_right_ob: Control = $Data/IsRight
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var animation_player: AnimationPlayer = $YourAnsOpEqAnimationPlayer
 @onready var is_right_text: Label = $Data/IsRight/IsRightText
 @onready var your_time_text: Label = $Data/TimeData/TimeSolved/YourTime/YourTimeText
 @onready var enemy_time_text: Label = $Data/TimeData/EnemyTimeSolved/EnemyTime/EnemyTimeText
