@@ -46,6 +46,8 @@ func _process(delta: float) -> void:
 			timer_on = true
 	else:
 		timer_on = false
+		set_enemy_equation("Wait")
+		
 func on_opponent_attack_answer_submitted(time_solved_in_s: float, is_right_s: bool, difficulty_s: int, equation_s: String):
 	op_eq_anim.play_animation(time_solved_in_s, is_right_s, difficulty_s, equation_s)
 	enemy_equation = equation_s

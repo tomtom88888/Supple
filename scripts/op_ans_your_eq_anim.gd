@@ -27,7 +27,7 @@ func play_animation(time_solved_in_s: float, time_enemy_solved_in_s: float, is_r
 	time_data_ob.modulate = Color(1, 1, 1, 0)
 	health_ob.modulate = Color(1, 1, 1, 0)
 	time_enemy_solved_in = time_enemy_solved_in_s
-	time_solved_in = time_enemy_solved_in_s
+	time_solved_in = time_solved_in_s
 	is_right = is_right_s
 	health = health_s
 	damage = damage_s

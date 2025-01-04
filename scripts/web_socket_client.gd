@@ -88,17 +88,15 @@ func _on_message_received(message: Variant) -> void:
 			if json["player"] == your_player_id:
 				print("you attack")
 				game.on_attack_answer_submitted(json["time"], json["correct"], json["diffculty"])
-				enemy_attack_time = json["time"]
 			else:
 				print("op attack")
 				game.on_opponent_attack_answer_submitted(json["time"], json["correct"], json["diffculty"], json["original_equation"])
-				your_attack_time = json["time"]
 		elif json["action"] == "submitted_defense":
 			if json["player"] == your_player_id:
 				print("you defense")
-				game.on_defense_answer_submitted(json["time"], enemy_attack_time, json["correct"], json["health"], json["damage"])
+				game.on_defense_answer_submitted(json["time"], json["original_time"], json["correct"], json["health"], json["damage"])
 			else:
-				game.on_opponent_defense_answer_submitted(json["time"], your_attack_time, json["correct"], json["health"], json["damage"])
+				game.on_opponent_defense_answer_submitted(json["time"], json["original_time"], json["correct"], json["health"], json["damage"])
 				print("op defense")
 				
 func _on_connected_to_server() -> void:
