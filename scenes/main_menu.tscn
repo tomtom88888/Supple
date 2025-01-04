@@ -51,6 +51,7 @@ offset_top = 955.0
 offset_right = 396.0
 offset_bottom = 1193.0
 grow_horizontal = 2
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource("3_m5plc")
 
 [node name="Label" type="Label" parent="TurnomnetButton"]
@@ -78,6 +79,7 @@ offset_left = 143.0
 offset_top = 607.0
 offset_right = 935.0
 offset_bottom = 845.0
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource("3_m5plc")
 
 [node name="Label" type="Label" parent="FindMatchButton"]

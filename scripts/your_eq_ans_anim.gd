@@ -7,7 +7,6 @@ var difficulty
 @onready var is_right_ob: Control = $Data/IsRight
 @onready var is_right_text: Label = $Data/IsRight/IsRightText
 @onready var your_time_text: Label = $Data/TimeData/TimeSolved/YourTime/YourTimeText
-@onready var health_bar_text: Label = $Data/Health/HealthBar/HealthBarText
 @onready var difficulty_bar: TextureProgressBar = $Data/Difficulty/DifficultyBar
 @onready var difficulty_text: Label = $Data/Difficulty/DifficultyBar/DifficultyText
 @onready var difficulty_ob: Control = $Data/Difficulty

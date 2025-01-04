@@ -7,7 +7,8 @@ var found_match
 
 @export var http_request: HTTPRequest
 
-const ip = "0"
+const ip = "localhost:8000"
+const url = "http://localhost:8000/join_match"
 
 signal connected_to_server()
 signal connection_closed()
@@ -80,23 +81,28 @@ func _on_message_received(message: Variant) -> void:
 		your_player_id = json["id"]
 		game = get_parent().switch_scene_and_return(load("res://scenes/game.tscn"))
 	if game_started:
+		print(json)
 		if json["action"] == "update_turn":
 			game.turn_type = json["turn"]
 		if json["action"] == "submitted_equation":
 			if json["player"] == your_player_id:
-				game.on_attack_answer_submitted(json["time"], json["correct"], json["difficulty"])
+				print("you attack")
+				game.on_attack_answer_submitted(json["time"], json["correct"], json["diffculty"])
 				enemy_attack_time = json["time"]
 			else:
-				game.on_opponent_attack_answer_submitted(json["time"], json["correct"], json["difficulty"], json["original_equation"])
+				print("op attack")
+				game.on_opponent_attack_answer_submitted(json["time"], json["correct"], json["diffculty"], json["original_equation"])
 				your_attack_time = json["time"]
 		elif json["action"] == "submitted_defense":
 			if json["player"] == your_player_id:
+				print("you defense")
 				game.on_defense_answer_submitted(json["time"], enemy_attack_time, json["correct"], json["health"], json["damage"])
 			else:
 				game.on_opponent_defense_answer_submitted(json["time"], your_attack_time, json["correct"], json["health"], json["damage"])
+				print("op defense")
 				
 func _on_connected_to_server() -> void:
-	pass
+	print("connected to server")
 
 func _connection_closed() -> void:
 	print("Connection closed")
@@ -105,10 +111,28 @@ func _process(delta: float) -> void:
 	poll()
 
 func send_join_rquest():
-	http_request.request("https://api.github.com/repos/godotengine/godot/releases/latest")
+	get_parent().switch_scene(load("res://scenes/finding_match.tscn"))
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	var client_id = rng.randi_range(0, 1000000)
+	var json_body = {"client_id": client_id}
+	var headers = ["Content-Type: application/json"]  # Add headers if needed
+	var result = http_request.request(
+		url + "?client_id=" + str(client_id),
+		headers,
+		HTTPClient.METHOD_POST,
+		JSON.stringify(json_body)
+	)
+	if result != OK:
+		print("Error sending request: ", result)
+	else:
+		print("Request sent successfully")
 
 func _on_request_completed(result, response_code, headers, body):
+	print("request completed")
 	var json = JSON.parse_string(body.get_string_from_utf8())
-	join_adress = json["join_adress"]
-	connect_to_url("ws://" + ip + "/ws/" + join_adress)
-	get_parent().switch_scene(load("res://scenes/finding_match.tscn"))
+	join_adress = json["join_address"]
+	print("ws://" + ip + "/ws/" + join_adress)
+	var error = connect_to_url("ws://" + ip + "/ws/" + join_adress)
+	if error != OK:
+		print(error)

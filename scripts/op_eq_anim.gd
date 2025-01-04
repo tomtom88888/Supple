@@ -9,7 +9,6 @@ var equation
 @onready var animation_player: AnimationPlayer = $OpEqAnimationPlayer
 @onready var is_right_text: Label = $Data/IsRight/IsRightText
 @onready var your_time_text: Label = $Data/TimeData/TimeSolved/YourTime/YourTimeText
-@onready var health_bar_text: Label = $Data/Health/HealthBar/HealthBarText
 @onready var difficulty_bar: TextureProgressBar = $Data/Difficulty/DifficultyBar
 @onready var difficulty_text: Label = $Data/Difficulty/DifficultyBar/DifficultyText
 @onready var wrong_screen_ob: Control = $Data/WrongScreen

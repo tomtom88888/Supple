@@ -22,6 +22,7 @@ func _ready() -> void:
 	
 	
 func play_animation(time_solved_in_s: float, time_enemy_solved_in_s: float, is_right_s: bool, health_s: int, damage_s: int):
+	print("fuck")
 	animation_player.play("animation_screen_in")
 	is_right_ob.modulate = Color(1, 1, 1, 1)
 	time_data_ob.modulate = Color(1, 1, 1, 0)

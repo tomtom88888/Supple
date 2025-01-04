@@ -1,5 +1,5 @@
 extends Control
-
+@onready var web_sockets_manager: Node2D = $"../WebSocketsManager"
 @onready var your_eq_anim: Panel = $YourEqAnim
 @onready var not_valid_animation_player: AnimationPlayer = $EquationNotValidAnim/AnimationPlayer
 @onready var your_equation: LineEdit = %YourEquation
@@ -15,6 +15,8 @@ extends Control
 @onready var your_health_bar: TextureProgressBar = $YourHealthBar
 @onready var your_health_bar_text: Label = $YourHealthBar/YourHealthBarText
 @onready var op_ans_your_eq_anim: Panel = $OpAnsYourEqAnim
+@onready var your_equation_text: Label = %YourEquationText
+
 var stop_timer
 var prev_time
 var turn_type = ""
@@ -24,6 +26,10 @@ var submitted_equation
 var equation
 var enemy_equation
 var your_attack_time
+
+func _ready() -> void:
+	print(your_ans_op_eq_anim)
+	your_ans_op_eq_anim.play_animation(50, 5, true, 80, 20)
 
 func _process(delta: float) -> void:
 	if turn_type == "defend":
@@ -47,6 +53,7 @@ func _on_op_eq_animation_player_current_animation_changed(name: String) -> void:
 
 
 func on_attack_answer_submitted(time_solved_in_s: float, is_right_s: bool, difficulty_s: int):
+	print("attack anim")
 	var time_took_to_solve = current_time
 	your_eq_ans_anim.play_animation(time_solved_in_s, is_right_s, difficulty_s)
 	stop_timer = false
@@ -141,36 +148,39 @@ func equation_writing_timer():
 		
 func equation_not_valid():
 	not_valid_animation_player.play("EquationNotValidAnim")
-	print("not valid")
 	
 func _on_submit_button_pressed() -> void:
 	if turn_type == "attack":
-		if submitted_equation:
+		if not submitted_equation:
 			stop_timer = true
-			print("submit")
 			equation = your_equation.text
 			for c in equation:
 				if c not in "+-/*0123456789.=() ":
+					print(c)
 					equation_not_valid()
 					return
-			print("Equation:", equation)
 			your_equation.text = ""
-			your_eq_anim.play_aniamtion(equation)
+			your_eq_anim.play_animation(equation)
+			your_equation_text.text = str(equation)
+			submitted_equation = true
 		else:
 			var answer = your_equation.text
 			for c in answer:
-				if c not in "0123456789.":
+				if c not in "0123456789. ":
 					equation_not_valid()
 					return
 			var time_took_to_solve = TimeElapsed.time_elapsed - prev_time
-			#send answer and equation to beckend
+			submitted_equation = false
+			web_sockets_manager.send(JSON.stringify({"player": web_sockets_manager.your_player_id, "time": time_took_to_solve, "action": "submit_equation", "equation": str(equation) + " = " + str(answer)}))
+			your_equation_text.text = "Your Equation:"
 	elif turn_type == "defend":
 		var answer = your_equation.text
 		for c in answer:
-			if c not in "0123456789.":
+			if c not in "0123456789. ":
 				equation_not_valid()
 				return
 		var time_took_to_solve = TimeElapsed.time_elapsed - prev_time
+		web_sockets_manager.send(JSON.stringify({"player": web_sockets_manager.your_player_id, "time": time_took_to_solve, "action": "submit_defend", "solution": str(answer)}))
 		#send answer to beckend
 
 func _on_your_eq_animation_player_current_animation_changed(name: String) -> void:

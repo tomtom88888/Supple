@@ -129,6 +129,7 @@ grow_vertical = 2
 script = ExtResource("7_ukaty")
 
 [node name="OpEqAnim" type="Panel" parent="."]
+visible = false
 z_index = 10
 layout_mode = 0
 offset_top = -1976.0
@@ -361,6 +362,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="YourEqAnim" type="Panel" parent="."]
+visible = false
 z_index = 10
 layout_mode = 0
 offset_top = -1976.0
@@ -441,6 +443,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="YourEqAnsAnim" type="Panel" parent="."]
+visible = false
 z_index = 10
 layout_mode = 0
 offset_top = -1976.0
@@ -631,6 +634,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="OpAnsYourEqAnim" type="Panel" parent="."]
+visible = false
 z_index = 10
 layout_mode = 0
 offset_top = -1976.0
@@ -847,6 +851,7 @@ theme_override_font_sizes/font_size = 111
 text = "Enemy Health Left:"
 
 [node name="YourAnsOpEqAnim" type="Panel" parent="."]
+visible = false
 z_index = 10
 layout_mode = 0
 offset_top = -1976.0

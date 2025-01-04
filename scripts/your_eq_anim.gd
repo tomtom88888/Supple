@@ -2,12 +2,7 @@ extends Panel
 
 var equation
 var difficulty
-@onready var time_data_ob: Control = $Data/TimeData
 @onready var animation_player: AnimationPlayer = $YourEqAnimationPlayer
-@onready var is_right_text: Label = $Data/IsRight/IsRightText
-@onready var difficulty_bar: TextureProgressBar = $Data/Difficulty/DifficultyBar
-@onready var difficulty_text: Label = $Data/Difficulty/DifficultyBar/DifficultyText
-@onready var difficulty_ob: Control = $Data/Difficulty
 @onready var equation_ob: Control = $Data/Equation
 @onready var equation_text: Label = $Data/Equation/EquationText
 
