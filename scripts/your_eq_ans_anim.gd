@@ -3,6 +3,7 @@ extends Panel
 var time_solved_in
 var is_right
 var difficulty
+
 @onready var time_data_ob: Control = $Data/TimeData
 @onready var is_right_ob: Control = $Data/IsRight
 @onready var is_right_text: Label = $Data/IsRight/IsRightText
@@ -12,6 +13,7 @@ var difficulty
 @onready var difficulty_ob: Control = $Data/Difficulty
 @onready var wrong_screen_ob: Control = $Data/WrongScreen
 @onready var animation_player: AnimationPlayer = $YourEqAnsAnimationPlayer
+
 
 func _ready() -> void:
 	pass

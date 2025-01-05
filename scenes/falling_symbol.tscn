@@ -8,6 +8,7 @@
 radius = 92.6553
 
 [node name="FallingSymbol" type="RigidBody2D"]
+z_index = -5
 mass = 0.5
 physics_material_override = ExtResource("1_0nxu8")
 gravity_scale = 0.1

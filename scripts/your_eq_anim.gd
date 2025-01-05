@@ -28,5 +28,3 @@ func turn_data_animation():
 	
 	animation_player.play("animation_screen_out")
 	await get_tree().create_timer(1.5).timeout
-	get_parent().stop_timer = false
-	get_parent().count_up()

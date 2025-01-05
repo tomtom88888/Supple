@@ -14,12 +14,13 @@ grow_vertical = 2
 script = ExtResource("1_ttnyq")
 current_scene = NodePath("MainMenu")
 
-[node name="WebSocketsManager" type="Node2D" parent="." node_paths=PackedStringArray("http_request")]
+[node name="WebSocketsManager" type="Node2D" parent="." node_paths=PackedStringArray("join_http_request")]
 script = ExtResource("2_fbfoc")
-http_request = NodePath("../HTTPRequest")
+join_http_request = NodePath("../JoinLobbyRequest")
 
-[node name="HTTPRequest" type="HTTPRequest" parent="."]
+[node name="DeleteLobbyRequest" type="HTTPRequest" parent="."]
 
-[node name="MainMenu" parent="." node_paths=PackedStringArray("WebSocketManager") instance=ExtResource("1_i8dd0")]
+[node name="JoinLobbyRequest" type="HTTPRequest" parent="."]
+
+[node name="MainMenu" parent="." instance=ExtResource("1_i8dd0")]
 layout_mode = 1
-WebSocketManager = NodePath("../WebSocketsManager")

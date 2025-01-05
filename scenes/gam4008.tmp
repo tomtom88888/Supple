@@ -1,13 +1,11 @@
-[gd_scene load_steps=34 format=3 uid="uid://cntutkru2mait"]
+[gd_scene load_steps=31 format=3 uid="uid://cntutkru2mait"]
 
 [ext_resource type="Texture2D" uid="uid://cjdl41dhgb81w" path="res://sprites/HealthBar.png" id="1_1uwvm"]
 [ext_resource type="Script" path="res://scripts/op_eq_ans_anim.gd" id="1_ohmt2"]
 [ext_resource type="Script" path="res://scripts/op_eq_anim.gd" id="1_p4ovs"]
 [ext_resource type="Script" path="res://scripts/your_eq_ans_anim.gd" id="1_weo7i"]
-[ext_resource type="Script" path="res://scripts/lose_anim.gd" id="2_5kn1q"]
-[ext_resource type="Script" path="res://scripts/win_anim.gd" id="2_a5vly"]
 [ext_resource type="FontFile" uid="uid://c4vb2s2xdy8ma" path="res://fonts/Outfit-ExtraBold.ttf" id="2_dtfsr"]
-[ext_resource type="Script" path="res://scripts/game_started_anim.gd" id="2_gos2a"]
+[ext_resource type="Script" path="res://scenes/game_started_anim.gd" id="2_gos2a"]
 [ext_resource type="Texture2D" uid="uid://c4rlqltrb4l7o" path="res://sprites/EnemyHealthBarUnder.png" id="3_ogkdd"]
 [ext_resource type="Texture2D" uid="uid://csawjxwjg75vl" path="res://sprites/GameDataBar.png" id="4_3e3ya"]
 [ext_resource type="Texture2D" uid="uid://brca8hcoi2cs7" path="res://sprites/DifficultyBarUnderLarge.png" id="4_6al3j"]
@@ -67,10 +65,6 @@ _data = {
 "animation_screen_out": SubResource("Animation_4mjl0"),
 "fade": SubResource("Animation_rnaco")
 }
-
-[sub_resource type="Curve" id="Curve_eco6m"]
-_data = [Vector2(0.026087, 0.098901), 0.0, 0.0, 0, 0, Vector2(1, 0.252747), 0.0, 0.0, 0, 0]
-point_count = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k4ioq"]
 bg_color = Color(0.868985, 0.868985, 0.868985, 1)
@@ -134,145 +128,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("7_ukaty")
-
-[node name="LoseAnim" type="Panel" parent="."]
-z_index = 10
-layout_mode = 0
-offset_top = -1976.0
-offset_right = 1080.0
-offset_bottom = -56.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_xk8k3")
-script = ExtResource("2_5kn1q")
-
-[node name="WinAnimationPlayer" type="AnimationPlayer" parent="LoseAnim"]
-libraries = {
-"": SubResource("AnimationLibrary_o4aii")
-}
-
-[node name="Data" type="Control" parent="LoseAnim"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -540.0
-offset_right = 540.0
-offset_bottom = 1920.0
-grow_horizontal = 2
-
-[node name="TurnTypeTitle" type="Label" parent="LoseAnim/Data"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -235.5
-offset_top = 777.0
-offset_right = 235.5
-offset_bottom = 910.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 100
-text = "You Lost! Better luck
-Next Time."
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="WinAnim" type="Panel" parent="."]
-z_index = 10
-layout_mode = 0
-offset_top = -3877.0
-offset_right = 1080.0
-offset_bottom = -1957.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_xk8k3")
-script = ExtResource("2_a5vly")
-
-[node name="WinAnimationPlayer" type="AnimationPlayer" parent="WinAnim"]
-libraries = {
-"": SubResource("AnimationLibrary_o4aii")
-}
-
-[node name="Data" type="Control" parent="WinAnim"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -540.0
-offset_right = 540.0
-offset_bottom = 1920.0
-grow_horizontal = 2
-
-[node name="TurnTypeTitle" type="Label" parent="WinAnim/Data"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -235.5
-offset_top = 777.0
-offset_right = 235.5
-offset_bottom = 910.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 100
-text = "You Won!"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Confetti" type="Node2D" parent="WinAnim/Data/TurnTypeTitle"]
-position = Vector2(214.5, 80)
-
-[node name="red" type="CPUParticles2D" parent="WinAnim/Data/TurnTypeTitle/Confetti"]
-scale = Vector2(5.295, 5.295)
-emitting = false
-amount = 30
-explosiveness = 0.6
-randomness = 0.2
-local_coords = true
-direction = Vector2(0, -1)
-gravity = Vector2(0, 100)
-initial_velocity_min = 90.0
-initial_velocity_max = 130.0
-angular_velocity_min = 280.0
-angular_velocity_max = 280.0
-linear_accel_min = 12.0
-linear_accel_max = 12.0
-scale_amount_max = 10.0
-scale_amount_curve = SubResource("Curve_eco6m")
-color = Color(0.84481, 0.153295, 0.241, 1)
-
-[node name="yellow" type="CPUParticles2D" parent="WinAnim/Data/TurnTypeTitle/Confetti"]
-scale = Vector2(5.295, 5.295)
-emitting = false
-amount = 30
-explosiveness = 0.6
-randomness = 0.2
-local_coords = true
-direction = Vector2(0, -1)
-gravity = Vector2(0, 100)
-initial_velocity_min = 90.0
-initial_velocity_max = 130.0
-angular_velocity_min = 280.0
-angular_velocity_max = 280.0
-linear_accel_min = 12.0
-linear_accel_max = 12.0
-scale_amount_max = 10.0
-scale_amount_curve = SubResource("Curve_eco6m")
-color = Color(0.785428, 0.584829, 0.313374, 1)
-
-[node name="green" type="CPUParticles2D" parent="WinAnim/Data/TurnTypeTitle/Confetti"]
-scale = Vector2(5.295, 5.295)
-emitting = false
-amount = 30
-explosiveness = 0.6
-randomness = 0.2
-local_coords = true
-direction = Vector2(0, -1)
-gravity = Vector2(0, 100)
-initial_velocity_min = 90.0
-initial_velocity_max = 130.0
-angular_velocity_min = 280.0
-angular_velocity_max = 280.0
-linear_accel_min = 12.0
-linear_accel_max = 12.0
-scale_amount_max = 10.0
-scale_amount_curve = SubResource("Curve_eco6m")
-color = Color(0, 0.57313, 5.77569e-07, 1)
 
 [node name="GameStartedAnim" type="Panel" parent="."]
 z_index = 10
@@ -1382,6 +1237,7 @@ offset_left = 23.0
 offset_top = 359.0
 offset_right = 304.0
 offset_bottom = 516.0
+value = 100.0
 texture_under = ExtResource("10_4ai41")
 texture_progress = ExtResource("5_n1bf3")
 
@@ -1401,20 +1257,20 @@ theme_override_font_sizes/font_size = 56
 text = "0"
 horizontal_alignment = 1
 
-[node name="TimeIdentifier" type="Label" parent="GameDataBar"]
+[node name="TimeIdenifier" type="Label" parent="GameDataBar"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -178.5
-offset_top = -108.0
-offset_right = 178.5
-offset_bottom = -13.0
+offset_left = -156.0
+offset_top = -152.0
+offset_right = 156.0
+offset_bottom = 19.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 33
-text = "Hidden Because It's
- The Opponent's turn"
+theme_override_font_sizes/font_size = 55
+text = "Opponent's
+Time:"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -1527,8 +1383,6 @@ text = "Your Equation:"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="animation_finished" from="LoseAnim/WinAnimationPlayer" to="." method="_on_game_started_animation_player_animation_finished"]
-[connection signal="animation_finished" from="WinAnim/WinAnimationPlayer" to="." method="_on_game_started_animation_player_animation_finished"]
 [connection signal="animation_finished" from="GameStartedAnim/GameStartedAnimationPlayer" to="." method="_on_game_started_animation_player_animation_finished"]
 [connection signal="animation_finished" from="OpEqAnim/OpEqAnimationPlayer" to="." method="_on_op_eq_animation_player_animation_finished"]
 [connection signal="animation_finished" from="YourEqAnim/YourEqAnimationPlayer" to="." method="_on_your_eq_animation_player_animation_finished"]

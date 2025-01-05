@@ -1,0 +1,87 @@
+[gd_scene load_steps=5 format=3 uid="uid://bmv2qthjqj4f"]
+
+[ext_resource type="Script" path="res://scripts/join_lobby.gd" id="1_p6k34"]
+[ext_resource type="Texture2D" uid="uid://ci2fwbpyilhma" path="res://sprites/BG.png" id="2_73nxq"]
+[ext_resource type="Texture2D" uid="uid://bs7fa7e6ggqs4" path="res://sprites/FindMatchButton.png" id="3_lna1q"]
+[ext_resource type="Script" path="res://scripts/falling_objects.gd" id="4_jggob"]
+
+[node name="JoinLobby" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p6k34")
+
+[node name="Title" type="Label" parent="."]
+z_index = 5
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -215.0
+offset_top = 89.0
+offset_right = 215.0
+offset_bottom = 269.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 131
+text = "Supple"
+
+[node name="BG" type="TextureRect" parent="."]
+z_index = -5
+layout_mode = 0
+offset_right = 1080.0
+offset_bottom = 1920.0
+texture = ExtResource("2_73nxq")
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -363.0
+offset_top = 823.0
+offset_right = 363.0
+offset_bottom = 927.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 61
+placeholder_text = "Room Code"
+
+[node name="JoinLobbyButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -396.0
+offset_top = 991.0
+offset_right = 396.0
+offset_bottom = 1229.0
+grow_horizontal = 2
+texture_normal = ExtResource("3_lna1q")
+
+[node name="Label" type="Label" parent="JoinLobbyButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -318.5
+offset_top = -79.5
+offset_right = 318.5
+offset_bottom = 79.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 126
+text = "Join Lobby"
+
+[node name="FallingObjects" type="Node2D" parent="."]
+z_index = -5
+script = ExtResource("4_jggob")
+
+[node name="SpawnTimer" type="Timer" parent="FallingObjects"]
+
+[connection signal="pressed" from="JoinLobbyButton" to="." method="_on_join_lobby_button_pressed"]
+[connection signal="timeout" from="FallingObjects/SpawnTimer" to="FallingObjects" method="_on_spawn_timer_timeout"]
