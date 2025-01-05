@@ -1370,5 +1370,6 @@ vertical_alignment = 1
 [connection signal="current_animation_changed" from="OpEqAnim/OpEqAnimationPlayer" to="." method="_on_op_eq_animation_player_current_animation_changed"]
 [connection signal="current_animation_changed" from="YourEqAnim/YourEqAnimationPlayer" to="." method="_on_your_eq_animation_player_current_animation_changed"]
 [connection signal="current_animation_changed" from="YourEqAnsAnim/YourEqAnsAnimationPlayer" to="." method="_on_your_eq_ans_animation_player_current_animation_changed"]
+[connection signal="animation_changed" from="OpAnsYourEqAnim/OpAnsYourEqAnimationPlayer" to="." method="_on_op_ans_your_eq_animation_player_animation_changed"]
 [connection signal="current_animation_changed" from="YourAnsOpEqAnim/YourAnsOpEqAnimationPlayer" to="." method="_on_your_ans_op_eq_animation_player_current_animation_changed"]
 [connection signal="pressed" from="SubmitButton" to="." method="_on_submit_button_pressed"]
