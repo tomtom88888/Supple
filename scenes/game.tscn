@@ -132,6 +132,7 @@ script = ExtResource("7_ukaty")
 process_mode = 4
 visible = false
 z_index = 10
+layout_mode = 0
 offset_top = -4146.0
 offset_right = 1080.0
 offset_bottom = -2226.0

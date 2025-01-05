@@ -72,13 +72,12 @@ func turn_data_animation():
 		enemy_time_text.text = str(random_time)
 		await get_tree().create_timer(time_until_switch).timeout
 		time_until_switch += 0.02
-	enemy_time_text.text = str(time_solved_in)
+	enemy_time_text.text = str(snappedf(time_solved_in, 0.1))
 	await get_tree().create_timer(1).timeout
 
 	var current_health = damage + health
 	for i in range(1, 101):
 		health_ob.modulate.a = i/100.0
-		print(health_ob.modulate.a)
 		await get_tree().create_timer(0.01).timeout
 	
 	if current_health > health:

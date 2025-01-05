@@ -28,7 +28,7 @@ var equation
 var enemy_equation
 var your_attack_time
 var timer_on
-
+var counting_up = true
 
 func _ready() -> void:
 	submitted_equation = false
@@ -104,13 +104,21 @@ func set_enemy_health(health, damage):
 			enemy_health_bar.value = current_health
 			enemy_health_bar_text.text = str(current_health)
 			await get_tree().create_timer(0.1).timeout
+	enemy_health_bar.value = health
 
 func count_down(time):
 	var current_time = time
-	while current_time > 0:
-		time_text.text = str(current_time)
+	while time > 0:
+		time_text.text = str(time)
 		time -= 0.01
 		await get_tree().create_timer(0.01).timeout
+
+func count_up():
+	var time = 0
+	while counting_up:
+		time_text.text = str(current_time)
+		time += 1
+		await get_tree().create_timer(1).timeout
 
 
 func set_health(health, damage):
@@ -127,6 +135,7 @@ func set_health(health, damage):
 			your_health_bar.value = current_health
 			your_health_bar_text.text = str(current_health)
 			await get_tree().create_timer(0.1).timeout
+	your_health_bar.value = health
 
 
 func set_enemy_equation(equation: String):
@@ -178,6 +187,7 @@ func _on_submit_button_pressed() -> void:
 			your_equation_text.text = str(equation)
 			submitted_equation = true
 		else:
+			counting_up = false
 			var answer = your_equation.text
 			for c in answer:
 				if c not in "0123456789. ":

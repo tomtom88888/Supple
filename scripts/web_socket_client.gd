@@ -7,9 +7,9 @@ var found_match
 
 @export var http_request: HTTPRequest
 
-const ip = "localhost:8000"
-const url = "http://localhost:8000/join_match"
-
+const ip = "95.35.170.58:8000"
+const url = "http://95.35.170.58:8000/join_match"
+	
 signal connected_to_server()
 signal connection_closed()
 signal message_received(message: Variant)
