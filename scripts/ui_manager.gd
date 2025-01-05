@@ -139,6 +139,7 @@ func count_down(time):
 func count_up():
 	var time = 0
 	while counting_up:
+		print(time)
 		time_text.text = str(time)
 		time += 0.01
 		if stop_count_up:
