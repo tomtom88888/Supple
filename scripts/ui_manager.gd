@@ -16,6 +16,7 @@ extends Control
 @onready var your_health_bar_text: Label = $YourHealthBar/YourHealthBarText
 @onready var op_ans_your_eq_anim: Panel = $OpAnsYourEqAnim
 @onready var your_equation_text: Label = %YourEquationText
+@onready var enemy_equation_text_number: Label = $EnemyEquationTextNumber
 
 var stop_timer
 var prev_time
@@ -39,14 +40,16 @@ func _process(delta: float) -> void:
 		#current_time = TimeElapsed.time_elapsed - prev_time
 		#if current_time > enemy_time:
 			#web_sockets_manager.send(JSON.stringify({"player": web_sockets_manager.your_player_id, "time": 0, "action": "submit_defend", "solution": str(-9488961.42524)}))
-	if turn_type == "attack":
+	elif turn_type == "defend":
+		set_enemy_equation(enemy_equation)
+	elif turn_type == "attack":
 		set_enemy_equation("It Is Now Your Turn To Attack")
 		if not timer_on:
 			equation_writing_timer()
 			timer_on = true
 	else:
-		timer_on = false
 		set_enemy_equation("Wait")
+		timer_on = false
 		
 func on_opponent_attack_answer_submitted(time_solved_in_s: float, is_right_s: bool, difficulty_s: int, equation_s: String):
 	op_eq_anim.play_animation(time_solved_in_s, is_right_s, difficulty_s, equation_s)
@@ -127,7 +130,7 @@ func set_health(health, damage):
 
 
 func set_enemy_equation(equation: String):
-	enemy_equation_text.text = equation
+	enemy_equation_text_number.text = equation
 
 func set_difficulty(difficulty):
 	while difficulty > difficulty_bar.value:
