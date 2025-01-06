@@ -20,6 +20,7 @@ extends Control
 @onready var enemy_equation_text_number: Label = $EnemyEquationTextNumber
 @onready var submit_button: Button = $SubmitButton
 @onready var time_identifier: Label = $GameDataBar/TimeIdentifier
+@onready var equation_timer: Timer = $EquationTimer
 
 var prev_defense_time
 var prev_attack_time
@@ -40,6 +41,7 @@ var enemy_turn
 var enemy_health
 var your_health
 var difficulty
+var didnt_write_c
 @onready var game_started_anim: Panel = $GameStartedAnim
 @onready var win_anim: Panel = $WinAnim
 @onready var lose_anim: Panel = $LoseAnim
@@ -49,6 +51,7 @@ func _ready() -> void:
 	enemy_health = [100, 0]
 	difficulty = 0
 	submitted_equation = false
+
 
 func on_won_game():
 	win_anim.play_animation()
@@ -73,6 +76,9 @@ func _process(delta: float) -> void:
 		time_identifier.text = "Your Time:"
 		set_enemy_equation("It Is Now Your Turn To Attack")
 		submit_button.visible = true
+		if not didnt_write_c:
+			didnt_write_c = true
+			equation_timer.start()
 	else:
 		time_identifier.text = "Hidden Because It's\n The Opponent's turn"
 		time_text.text = "Hidden"
@@ -261,5 +267,7 @@ func handle_animation_stop():
 	if turn_type == "attack":
 		counting_down_time = 60
 		counting_down_timer = true
+		equation_timer.stop()
+		equation_timer.start()
 	elif turn_type == "defend":
 		counting_up_timer = true

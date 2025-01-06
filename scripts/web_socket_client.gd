@@ -9,8 +9,10 @@ var username = "Anonymous"
 @export var join_http_request: HTTPRequest
 #@export var delete_http_request: HTTPRequest
 
-const ip = "95.35.170.58:8000"
-const host_url = "http://95.35.170.58:8000/host_match"
+#const ip = "95.35.170.58:8000"
+#const host_url = "http://95.35.170.58:8000/host_match"
+const ip = "localhost:8000"
+const host_url = "http://localhost:8000/host_match"
 #const delete_url = "http://95.35.170.58:8000/delete_lobby/"
 
 signal connected_to_server()
@@ -38,7 +40,7 @@ func poll() -> void:
 			connected_to_server.emit()
 		elif state == socket.STATE_CLOSED:
 			connection_closed.emit()
-		
+
 	while socket.get_ready_state() == socket.STATE_OPEN and socket.get_available_packet_count():
 		message_received.emit(get_message())
 
@@ -81,6 +83,7 @@ func _ready() -> void:
 
 func _on_message_received(message: Variant) -> void:
 	var json = JSON.parse_string(message)
+	print(message)
 	if json["action"] == "start":
 		game_started = true
 		your_player_id = json["id"]
@@ -94,9 +97,9 @@ func _on_message_received(message: Variant) -> void:
 			game.turn_type = json["turn"]
 		if json["action"] == "submitted_equation":
 			if json["player"] == your_player_id:
-				game.on_attack_answer_submitted(json["time"], json["correct"], json["diffculty"])
+				game.on_attack_answer_submitted(json["time"], json["correct"], json["difficulty"])
 			else:
-				game.on_opponent_attack_answer_submitted(json["time"], json["correct"], json["diffculty"], json["original_equation"])
+				game.on_opponent_attack_answer_submitted(json["time"], json["correct"], json["difficulty"], json["original_equation"])
 		elif json["action"] == "submitted_defense":
 			if json["player"] == your_player_id:
 				game.on_defense_answer_submitted(json["time"], json["original_time"], json["correct"], json["health"], json["damage"])
@@ -107,15 +110,16 @@ func _on_message_received(message: Variant) -> void:
 				game.on_won_game()
 			else:
 				game.on_lost_game()
-			
+
 func _on_connected_to_server() -> void:
 	#send(JSON.stringify({"action": "set_username", "value": username}))
 	get_parent().switch_scene(load("res://scenes/lobby.tscn"))
-	print("connected to server")
+	print("Connected to server")
 
 func _connection_closed() -> void:
 	print("Connection closed")
-	
+	# Try reconnecting if the game is not started
+
 func _process(delta: float) -> void:
 	poll()
 
@@ -139,7 +143,7 @@ func send_host_lobby_request():
 	rng.randomize()
 	var client_id = rng.randi_range(0, 1000000)
 	var json_body = {}
-	var headers = []  # Add headers if needed
+	var headers = ["Content-Type: application/json"]
 	var result = join_http_request.request(
 		host_url,
 		headers,
@@ -151,14 +155,18 @@ func send_host_lobby_request():
 	else:
 		print("Request sent successfully")
 
-func join_lobby_rquest(join_adress):
+func join_lobby_request(join_adress):
 	get_parent().switch_scene(load("res://scenes/finding_match.tscn"))
 	connect_to_url("ws://" + ip + "/ws/" + join_adress)
 
 func _on_host_lobby_request_completed(result, response_code, headers, body):
-	get_parent().switch_scene(load("res://scenes/finding_match.tscn"))
-	var json = JSON.parse_string(body.get_string_from_utf8())
-	join_adress = json["join_address"]
-	var error = connect_to_url("ws://" + ip + "/ws/" + join_adress)
-	if error != OK:
-		print(error)
+	if response_code == 200:
+		get_parent().switch_scene(load("res://scenes/finding_match.tscn"))
+		var json = JSON.parse_string(body.get_string_from_utf8())
+		join_adress = json["join_address"]
+		print("Received join address:", join_adress)
+		var error = connect_to_url("ws://" + ip + "/ws/" + join_adress)
+		if error != OK:
+			print("Error connecting: ", error)
+	else:
+		print("Error in host lobby request. Response code:", response_code)

@@ -178,9 +178,9 @@ vertical_alignment = 1
 [node name="WinAnim" type="Panel" parent="."]
 z_index = 10
 layout_mode = 0
-offset_top = -3877.0
+offset_top = -1976.0
 offset_right = 1080.0
-offset_bottom = -1957.0
+offset_bottom = -56.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_xk8k3")
 script = ExtResource("2_a5vly")
 
@@ -624,6 +624,12 @@ theme_override_font_sizes/font_size = 105
 text = "Now Solve It!"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="EquationTimer" type="Label" parent="YourEqAnim/Data/Equation"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 21.0
+text = "3s"
 
 [node name="YourEqAnsAnim" type="Panel" parent="."]
 z_index = 10
@@ -1526,6 +1532,23 @@ theme_override_font_sizes/font_size = 76
 text = "Your Equation:"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="EquationTimerText" type="Label" parent="YourEquation"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -383.5
+offset_top = -204.0
+offset_right = 383.5
+offset_bottom = -108.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 76
+text = "Time Left To Write: 3s"
+
+[node name="EquationTimer" type="Timer" parent="."]
+wait_time = 3.0
 
 [connection signal="animation_finished" from="LoseAnim/WinAnimationPlayer" to="." method="_on_game_started_animation_player_animation_finished"]
 [connection signal="animation_finished" from="WinAnim/WinAnimationPlayer" to="." method="_on_game_started_animation_player_animation_finished"]
