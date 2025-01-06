@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://e33lurhb5kf0"]
+[gd_scene load_steps=6 format=3 uid="uid://e33lurhb5kf0"]
 
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_6bpd2"]
 [ext_resource type="Texture2D" uid="uid://ci2fwbpyilhma" path="res://sprites/BG.png" id="1_bs1do"]
 [ext_resource type="Script" path="res://scripts/falling_objects.gd" id="1_bt5xq"]
-[ext_resource type="Texture2D" uid="uid://bs7fa7e6ggqs4" path="res://sprites/FindMatchButton.png" id="3_m5plc"]
+[ext_resource type="Texture2D" uid="uid://8jot7a3ic4ge" path="res://sprites/Tournament.png" id="4_jwn4f"]
+[ext_resource type="Texture2D" uid="uid://drf8k1jrfic2p" path="res://sprites/1v1.png" id="5_h8rvn"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -37,8 +38,10 @@ script = ExtResource("1_bt5xq")
 [node name="BG" type="TextureRect" parent="."]
 z_index = -5
 layout_mode = 0
-offset_right = 1080.0
-offset_bottom = 1920.0
+offset_left = -3043.0
+offset_top = -1776.0
+offset_right = 3999.0
+offset_bottom = 4466.0
 texture = ExtResource("1_bs1do")
 
 [node name="LineEdit" type="LineEdit" parent="."]
@@ -47,84 +50,41 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -355.0
-offset_top = 1269.0
+offset_top = 1617.0
 offset_right = 341.0
-offset_bottom = 1436.0
+offset_bottom = 1784.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 86
 placeholder_text = "Username:"
 alignment = 1
 
-[node name="TournamentButton" type="TextureButton" parent="."]
+[node name="TournamentButton" type="Button" parent="."]
+layout_direction = 1
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -396.0
-offset_top = 955.0
-offset_right = 396.0
-offset_bottom = 1193.0
+offset_left = -266.5
+offset_top = 962.0
+offset_right = 266.5
+offset_bottom = 1508.0
 grow_horizontal = 2
-mouse_default_cursor_shape = 2
-texture_normal = ExtResource("3_m5plc")
+icon = ExtResource("4_jwn4f")
+flat = true
 
-[node name="Label" type="Label" parent="TournamentButton"]
+[node name="1v1Button" type="Button" parent="."]
+layout_direction = 1
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -42.0
-offset_top = -10.5
-offset_right = 42.0
-offset_bottom = 10.5
+offset_left = -266.5
+offset_top = 338.0
+offset_right = 266.5
+offset_bottom = 884.0
 grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.84697, 0.863628, 0.28619, 1)
-theme_override_font_sizes/font_size = 126
-text = "Tournament"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="FindMatchButton" type="TextureButton" parent="."]
-layout_mode = 0
-offset_left = 143.0
-offset_top = 607.0
-offset_right = 935.0
-offset_bottom = 845.0
-mouse_default_cursor_shape = 2
-texture_normal = ExtResource("3_m5plc")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="FindMatchButton"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -137.0
-offset_top = -79.5
-offset_right = 137.0
-offset_bottom = 79.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="FindMatchButton/HBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.686275, 0, 0, 1)
-theme_override_font_sizes/font_size = 126
-text = "Du"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label2" type="Label" parent="FindMatchButton/HBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0.768627, 1)
-theme_override_font_sizes/font_size = 126
-text = "el"
-horizontal_alignment = 1
-vertical_alignment = 1
+icon = ExtResource("5_h8rvn")
+flat = true
 
 [connection signal="timeout" from="FallingObjects/SpawnTimer" to="FallingObjects" method="_on_spawn_timer_timeout"]
-[connection signal="pressed" from="FindMatchButton" to="." method="_on_find_match_button_pressed"]
+[connection signal="pressed" from="1v1Button" to="." method="_on_v_1_button_pressed"]

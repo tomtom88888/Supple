@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://biebd6n3jy551"]
+[gd_scene load_steps=5 format=3 uid="uid://biebd6n3jy551"]
 
 [ext_resource type="PackedScene" uid="uid://e33lurhb5kf0" path="res://scenes/main_menu.tscn" id="1_i8dd0"]
 [ext_resource type="Script" path="res://scripts/scene_handler.gd" id="1_ttnyq"]
 [ext_resource type="Script" path="res://scripts/web_socket_client.gd" id="2_fbfoc"]
+[ext_resource type="Script" path="res://scripts/falling_objects.gd" id="4_11jy7"]
 
 [node name="SceneHandler" type="Control" node_paths=PackedStringArray("current_scene")]
 layout_mode = 3
@@ -24,3 +25,10 @@ join_http_request = NodePath("../JoinLobbyRequest")
 
 [node name="MainMenu" parent="." instance=ExtResource("1_i8dd0")]
 layout_mode = 1
+
+[node name="FallingObjects" type="Node2D" parent="."]
+script = ExtResource("4_11jy7")
+
+[node name="SpawnTimer" type="Timer" parent="FallingObjects"]
+
+[connection signal="timeout" from="FallingObjects/SpawnTimer" to="FallingObjects" method="_on_spawn_timer_timeout"]

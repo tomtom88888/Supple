@@ -14,6 +14,7 @@ var damage
 @onready var health_bar: TextureProgressBar = $Data/Health/HealthBar
 @onready var health_bar_text: Label = $Data/Health/HealthBar/HealthBarText
 @onready var health_ob: Control = $Data/Health
+@onready var green: CPUParticles2D = $Data/IsRight/green
 
 
 func _ready() -> void:
@@ -41,17 +42,18 @@ func right_wrong_aniamtion() -> void:
 	for i in range(20):
 		right = !right
 		if right:
-			is_right_text.text = "right"
+			is_right_text.text = "correct"
 			is_right_text.add_theme_color_override("font_color", Color.GREEN)
 		else:
-			is_right_text.text = "wrong"
+			is_right_text.text = "incorrect"
 			is_right_text.add_theme_color_override("font_color", Color.RED)
 		await get_tree().create_timer(0.1).timeout
 	if is_right:
-		is_right_text.text = "right"
+		is_right_text.text = "correct"
 		is_right_text.add_theme_color_override("font_color", Color.GREEN)
+		green.emitting = true
 	else:
-		is_right_text.text = "wrong"
+		is_right_text.text = "incorrect"
 		is_right_text.add_theme_color_override("font_color", Color.RED)
 	await get_tree().create_timer(0.5).timeout
 	turn_data_animation()
@@ -65,6 +67,8 @@ func turn_data_animation():
 		var random_time = str(randf_range(time_solved_in - 4, time_solved_in + 4)).substr(0, 3)
 		enemy_time_text.text = str(random_time)
 		await get_tree().create_timer(0.01).timeout
+	
+	green.emitting = false
 	
 	for i in range(7):
 		var random_time = str(randf_range(time_solved_in - switch_num, time_solved_in + switch_num)).substr(0, 3)

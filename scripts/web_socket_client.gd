@@ -5,6 +5,7 @@ var last_state = WebSocketPeer.STATE_CLOSED
 var join_adress
 var found_match
 var username = "Anonymous"
+var debugging = false
 
 @export var join_http_request: HTTPRequest
 #@export var delete_http_request: HTTPRequest
@@ -80,36 +81,75 @@ func _ready() -> void:
 	connect("connection_closed", _connection_closed)
 	connect("message_received", _on_message_received)
 	join_http_request.request_completed.connect(_on_host_lobby_request_completed)
+	debugging = false
+
+func debug_ui():
+	debugging = true
+	game = get_parent().switch_scene_and_return(load("res://scenes/game.tscn"))
+	game.debugging = true
+	game.turn_type = "attack"
+	game.debug_packet.connect(_on_debug_packet_received)
 
 func _on_message_received(message: Variant) -> void:
-	var json = JSON.parse_string(message)
-	print(message)
-	if json["action"] == "start":
-		game_started = true
-		your_player_id = json["id"]
-		game = get_parent().switch_scene_and_return(load("res://scenes/game.tscn"))
-	if game_started:
-		print(json)
-		if json["action"] == "update_turn":
-			if first_time:
-				first_time = false
-				game.on_game_started(json["turn"])
-			game.turn_type = json["turn"]
-		if json["action"] == "submitted_equation":
-			if json["player"] == your_player_id:
-				game.on_attack_answer_submitted(json["time"], json["correct"], json["difficulty"])
-			else:
-				game.on_opponent_attack_answer_submitted(json["time"], json["correct"], json["difficulty"], json["original_equation"])
-		elif json["action"] == "submitted_defense":
-			if json["player"] == your_player_id:
-				game.on_defense_answer_submitted(json["time"], json["original_time"], json["correct"], json["health"], json["damage"])
-			else:
-				game.on_opponent_defense_answer_submitted(json["time"], json["original_time"], json["correct"], json["health"], json["damage"])
-		elif json["action"] == "end_game":
-			if json["winner"] == your_player_id:
-				game.on_won_game()
-			else:
-				game.on_lost_game()
+	if not debugging:
+		var json = JSON.parse_string(message)
+		print(message)
+		if json["action"] == "start":
+			game_started = true
+			your_player_id = json["id"]
+			game = get_parent().switch_scene_and_return(load("res://scenes/game.tscn"))
+		if game_started:
+			print(json)
+			if json["action"] == "update_turn":
+				if first_time:
+					first_time = false
+					game.on_game_started(json["turn"])
+				game.turn_type = json["turn"]
+			if json["action"] == "submitted_equation":
+				if json["player"] == your_player_id:
+					game.on_attack_answer_submitted(json["time"], json["correct"], json["diffculty"])
+				else:
+					game.on_opponent_attack_answer_submitted(json["time"], json["correct"], json["diffculty"], json["original_equation"])
+			elif json["action"] == "submitted_defense":
+				if json["player"] == your_player_id:
+					game.on_defense_answer_submitted(json["time"], json["original_time"], json["correct"], json["health"], json["damage"])
+				else:
+					game.on_opponent_defense_answer_submitted(json["time"], json["original_time"], json["correct"], json["health"], json["damage"])
+			elif json["action"] == "end_game":
+				if json["winner"] == your_player_id:
+					game.on_won_game()
+				else:
+					game.on_lost_game()
+
+func _on_debug_packet_received(packet: String) -> void:
+	if debugging:
+		var json = JSON.parse_string(packet)
+		print(packet)
+		if json["action"] == "start":
+			game_started = true
+			your_player_id = 0
+		if game_started:
+			print(json)
+			if json["action"] == "update_turn":
+				if first_time:
+					first_time = false
+					game.on_game_started(json["turn"])
+				game.turn_type = json["turn"]
+			if json["action"] == "submitted_equation":
+				if json["player"] == your_player_id:
+					game.on_attack_answer_submitted(json["time"], json["correct"], json["diffculty"])
+				else:
+					game.on_opponent_attack_answer_submitted(json["time"], json["correct"], json["diffculty"], json["original_equation"])
+			elif json["action"] == "submitted_defense":
+				if json["player"] == your_player_id:
+					game.on_defense_answer_submitted(json["time"], json["original_time"], json["correct"], json["health"], json["damage"])
+				else:
+					game.on_opponent_defense_answer_submitted(json["time"], json["original_time"], json["correct"], json["health"], json["damage"])
+			elif json["action"] == "end_game":
+				if json["winner"] == your_player_id:
+					game.on_won_game()
+				else:
+					game.on_lost_game()
 
 func _on_connected_to_server() -> void:
 	#send(JSON.stringify({"action": "set_username", "value": username}))

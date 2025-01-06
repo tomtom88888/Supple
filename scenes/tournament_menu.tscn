@@ -32,8 +32,10 @@ text = "Supple"
 [node name="BG" type="TextureRect" parent="."]
 z_index = -5
 layout_mode = 0
-offset_right = 1080.0
-offset_bottom = 1920.0
+offset_left = -2708.0
+offset_top = -1738.0
+offset_right = 4334.0
+offset_bottom = 4504.0
 texture = ExtResource("1_e44tu")
 
 [node name="JoinMatch" type="TextureButton" parent="."]

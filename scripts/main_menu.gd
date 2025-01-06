@@ -15,3 +15,6 @@ func _process(delta: float) -> void:
 
 func _on_find_match_button_pressed() -> void:
 	get_parent().switch_scene(load("res://scenes/tournament_menu.tscn"))
+
+func _on_v_1_button_pressed() -> void:
+		get_parent().switch_scene(load("res://scenes/tournament_menu.tscn"))

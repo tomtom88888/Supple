@@ -35,8 +35,11 @@ vertical_alignment = 1
 
 [node name="BG" type="TextureRect" parent="."]
 z_index = -5
-offset_right = 1080.0
-offset_bottom = 1920.0
+layout_mode = 0
+offset_left = -2451.0
+offset_top = -1594.0
+offset_right = 4591.0
+offset_bottom = 4648.0
 texture = ExtResource("1_dm4cb")
 
 [node name="TextureButton" type="TextureButton" parent="."]

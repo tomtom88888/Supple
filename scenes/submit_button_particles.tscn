@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://dqirtdhnr51yv"]
+
+[ext_resource type="Texture2D" uid="uid://dehvpd7qebkvf" path="res://sprites/Multiply.png" id="1_n8lxr"]
+
+[sub_resource type="Curve" id="Curve_2skj5"]
+_data = [Vector2(0, 0.208791), 0.0, 0.0, 0, 0, Vector2(1, 0.362637), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="submit_button_particles" type="Node2D"]
+
+[node name="Multiply" type="CPUParticles2D" parent="."]
+position = Vector2(1, 0)
+explosiveness = 0.66
+texture = ExtResource("1_n8lxr")
+direction = Vector2(0, -1)
+gravity = Vector2(0, 1000)
+initial_velocity_min = 120.0
+initial_velocity_max = 696.0
+scale_amount_curve = SubResource("Curve_2skj5")
+
+[node name="Divide" type="CPUParticles2D" parent="."]
+
+[node name="Minus" type="CPUParticles2D" parent="."]
+
+[node name="Plus" type="CPUParticles2D" parent="."]

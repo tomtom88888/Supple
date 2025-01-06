@@ -18,8 +18,8 @@ func _process(delta: float) -> void:
 func play_animation(turn_type):
 	game_started_animation_player.play("animation_screen_in")
 	await get_tree().create_timer(1).timeout
-	red.emmitting = true
-	yellow.emmitting = true
-	green.emmitting = true
+	red.emitting = true
+	yellow.emitting = true
+	green.emitting = true
 	await get_tree().create_timer(1.5).timeout
 	get_parent().get_parent().switch_scene(load("res://scenes/main_menu.tscn"))

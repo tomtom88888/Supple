@@ -1,5 +1,8 @@
 extends Control
 
+signal debug_packet(packet: String)
+
+@onready var debug_title: Label = $DebugTitle
 @onready var web_sockets_manager: Node2D = $"../WebSocketsManager"
 @onready var your_eq_anim: Panel = $YourEqAnim
 @onready var not_valid_animation_player: AnimationPlayer = $EquationNotValidAnim/AnimationPlayer
@@ -21,6 +24,11 @@ extends Control
 @onready var submit_button: Button = $SubmitButton
 @onready var time_identifier: Label = $GameDataBar/TimeIdentifier
 @onready var equation_timer: Timer = $EquationTimer
+@onready var game_started_anim: Panel = $GameStartedAnim
+@onready var win_anim: Panel = $WinAnim
+@onready var lose_anim: Panel = $LoseAnim
+@onready var equation_timer_text: Label = $YourEquation/EquationTimerText
+@onready var debug_packet_edit: LineEdit = $DebugTitle/DebugPacket
 
 var prev_defense_time
 var prev_attack_time
@@ -42,10 +50,10 @@ var enemy_health
 var your_health
 var difficulty
 var didnt_write_c
-@onready var game_started_anim: Panel = $GameStartedAnim
-@onready var win_anim: Panel = $WinAnim
-@onready var lose_anim: Panel = $LoseAnim
-@onready var equation_timer_text: Label = $YourEquation/EquationTimerText
+var debugging
+
+
+
 
 func _ready() -> void:
 	your_health = [100, 0]
@@ -67,7 +75,13 @@ func _on_game_started_animation_player_animation_finished(anim_name: StringName)
 		handle_animation_stop()
 
 func _process(delta: float) -> void:
-	handle_timers()
+	if not debugging:
+		handle_timers()
+	
+	if debugging:
+		debug_title.visible = true
+	else:
+		debug_title.visible = false
 	
 	equation_timer_text.text = "Time Left To Write:" + str(snappedf(equation_timer.time_left, 0.01))
 	
@@ -84,9 +98,10 @@ func _process(delta: float) -> void:
 		time_identifier.text = "Your Time:"
 		set_enemy_equation("It Is Now Your Turn To Attack")
 		submit_button.visible = true
-		if not didnt_write_c:
-			didnt_write_c = true
-			equation_timer.start()
+		if not debugging:
+			if not didnt_write_c:
+				didnt_write_c = true
+				equation_timer.start()
 	else:
 		time_identifier.text = "Hidden Because It's\n The Opponent's turn"
 		time_text.text = "Hidden"
@@ -290,4 +305,10 @@ func _on_your_equation_text_changed(new_text: String) -> void:
 	didnt_write_c = false
 
 func _on_equation_timer_timeout() -> void:
-	web_sockets_manager.send(JSON.stringify({"player": web_sockets_manager.your_player_id, "time": TimeElapsed.time_elapsed - prev_defense_time, "action": "submit_equation", "equation": "0 = 1"}))
+	if not debugging:
+		web_sockets_manager.send(JSON.stringify({"player": web_sockets_manager.your_player_id, "time": TimeElapsed.time_elapsed - prev_defense_time, "action": "submit_equation", "equation": "0 = 1"}))
+
+
+func _on_debug_packet_text_submitted(new_text: String) -> void:
+	if debugging:
+		debug_packet.emit(debug_packet_edit.text)

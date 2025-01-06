@@ -377,6 +377,28 @@ Equation Was:"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="green" type="CPUParticles2D" parent="OpEqAnim/Data/IsRight"]
+z_index = 10
+position = Vector2(546, 505)
+scale = Vector2(5.295, 5.295)
+emitting = false
+amount = 30
+one_shot = true
+explosiveness = 0.6
+randomness = 0.2
+local_coords = true
+direction = Vector2(0, -1)
+gravity = Vector2(0, 100)
+initial_velocity_min = 90.0
+initial_velocity_max = 130.0
+angular_velocity_min = 280.0
+angular_velocity_max = 280.0
+linear_accel_min = 12.0
+linear_accel_max = 12.0
+scale_amount_max = 10.0
+scale_amount_curve = SubResource("Curve_eco6m")
+color = Color(0, 0.57313, 5.77569e-07, 1)
+
 [node name="TimeData" type="Control" parent="OpEqAnim/Data"]
 anchors_preset = 0
 offset_top = -4.0
@@ -694,6 +716,28 @@ Equation Was:"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="green" type="CPUParticles2D" parent="YourEqAnsAnim/Data/IsRight"]
+z_index = 10
+position = Vector2(540, 505)
+scale = Vector2(5.295, 5.295)
+emitting = false
+amount = 30
+one_shot = true
+explosiveness = 0.6
+randomness = 0.2
+local_coords = true
+direction = Vector2(0, -1)
+gravity = Vector2(0, 100)
+initial_velocity_min = 90.0
+initial_velocity_max = 130.0
+angular_velocity_min = 280.0
+angular_velocity_max = 280.0
+linear_accel_min = 12.0
+linear_accel_max = 12.0
+scale_amount_max = 10.0
+scale_amount_curve = SubResource("Curve_eco6m")
+color = Color(0, 0.57313, 5.77569e-07, 1)
+
 [node name="TimeData" type="Control" parent="YourEqAnsAnim/Data"]
 anchors_preset = 0
 offset_top = -4.0
@@ -883,6 +927,28 @@ text = "Opponent Answer To
 Your Equation Was:"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="green" type="CPUParticles2D" parent="OpAnsYourEqAnim/Data/IsRight"]
+z_index = 10
+position = Vector2(540, 505)
+scale = Vector2(5.295, 5.295)
+emitting = false
+amount = 30
+one_shot = true
+explosiveness = 0.6
+randomness = 0.2
+local_coords = true
+direction = Vector2(0, -1)
+gravity = Vector2(0, 100)
+initial_velocity_min = 90.0
+initial_velocity_max = 130.0
+angular_velocity_min = 280.0
+angular_velocity_max = 280.0
+linear_accel_min = 12.0
+linear_accel_max = 12.0
+scale_amount_max = 10.0
+scale_amount_curve = SubResource("Curve_eco6m")
+color = Color(0, 0.57313, 5.77569e-07, 1)
 
 [node name="TimeData" type="Control" parent="OpAnsYourEqAnim/Data"]
 modulate = Color(1, 1, 1, 0)
@@ -1100,6 +1166,28 @@ Enemy Equation Was:"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="green" type="CPUParticles2D" parent="YourAnsOpEqAnim/Data/IsRight"]
+z_index = 10
+position = Vector2(540, 505)
+scale = Vector2(5.295, 5.295)
+emitting = false
+amount = 30
+one_shot = true
+explosiveness = 0.6
+randomness = 0.2
+local_coords = true
+direction = Vector2(0, -1)
+gravity = Vector2(0, 100)
+initial_velocity_min = 90.0
+initial_velocity_max = 130.0
+angular_velocity_min = 280.0
+angular_velocity_max = 280.0
+linear_accel_min = 12.0
+linear_accel_max = 12.0
+scale_amount_max = 10.0
+scale_amount_curve = SubResource("Curve_eco6m")
+color = Color(0, 0.57313, 5.77569e-07, 1)
+
 [node name="TimeData" type="Control" parent="YourAnsOpEqAnim/Data"]
 anchors_preset = 0
 offset_top = -4.0
@@ -1255,8 +1343,10 @@ text = "Health Left:"
 [node name="BG" type="Panel" parent="."]
 z_index = -5
 layout_mode = 0
-offset_right = 1080.0
-offset_bottom = 1920.0
+offset_left = -2721.0
+offset_top = -1855.0
+offset_right = 4321.0
+offset_bottom = 4387.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_k4ioq")
 
 [node name="Panel" type="Panel" parent="."]
@@ -1511,7 +1601,6 @@ offset_bottom = -353.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 60
-placeholder_text = "equation goes here"
 alignment = 1
 script = ExtResource("17_wkae4")
 
@@ -1552,6 +1641,38 @@ vertical_alignment = 1
 [node name="EquationTimer" type="Timer" parent="."]
 wait_time = 3.0
 
+[node name="DebugTitle" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -512.0
+offset_top = 534.0
+offset_right = 189.0
+offset_bottom = 630.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 76
+text = "Debug Packet Here:"
+
+[node name="DebugPacket" type="LineEdit" parent="DebugTitle"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -348.5
+offset_top = 12.0
+offset_right = 343.5
+offset_bottom = 103.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 60
+placeholder_text = "debug packet goes here"
+alignment = 1
+script = ExtResource("17_wkae4")
+
 [connection signal="animation_finished" from="LoseAnim/WinAnimationPlayer" to="." method="_on_game_started_animation_player_animation_finished"]
 [connection signal="animation_finished" from="WinAnim/WinAnimationPlayer" to="." method="_on_game_started_animation_player_animation_finished"]
 [connection signal="animation_finished" from="GameStartedAnim/GameStartedAnimationPlayer" to="." method="_on_game_started_animation_player_animation_finished"]
@@ -1563,3 +1684,4 @@ wait_time = 3.0
 [connection signal="pressed" from="SubmitButton" to="." method="_on_submit_button_pressed"]
 [connection signal="text_changed" from="YourEquation" to="." method="_on_your_equation_text_changed"]
 [connection signal="timeout" from="EquationTimer" to="." method="_on_equation_timer_timeout"]
+[connection signal="text_submitted" from="DebugTitle/DebugPacket" to="." method="_on_debug_packet_text_submitted"]
