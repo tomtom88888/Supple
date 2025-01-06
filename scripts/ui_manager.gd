@@ -45,14 +45,13 @@ var didnt_write_c
 @onready var game_started_anim: Panel = $GameStartedAnim
 @onready var win_anim: Panel = $WinAnim
 @onready var lose_anim: Panel = $LoseAnim
+@onready var equation_timer_text: Label = $YourEquation/EquationTimerText
 
 func _ready() -> void:
 	your_health = [100, 0]
 	enemy_health = [100, 0]
 	difficulty = 0
 	submitted_equation = false
-	
-	
 
 func on_won_game():
 	win_anim.play_animation()
@@ -69,6 +68,14 @@ func _on_game_started_animation_player_animation_finished(anim_name: StringName)
 
 func _process(delta: float) -> void:
 	handle_timers()
+	
+	equation_timer_text.text = "Time Left To Write:" + str(snappedf(equation_timer.time_left, 0.01))
+	
+	if didnt_write_c == false:
+		didnt_write_c = true
+		equation_timer.stop()
+		equation_timer.start()
+	
 	if turn_type == "defend":
 		time_identifier.text = "Your Time:"
 		set_enemy_equation(enemy_equation)
@@ -281,3 +288,6 @@ func handle_animation_stop():
 
 func _on_your_equation_text_changed(new_text: String) -> void:
 	didnt_write_c = false
+
+func _on_equation_timer_timeout() -> void:
+	web_sockets_manager.send(JSON.stringify({"player": web_sockets_manager.your_player_id, "time": TimeElapsed.time_elapsed - prev_defense_time, "action": "submit_equation", "equation": "0 = 1"}))

@@ -9,10 +9,10 @@ var username = "Anonymous"
 @export var join_http_request: HTTPRequest
 #@export var delete_http_request: HTTPRequest
 
-#const ip = "95.35.170.58:8000"
-#const host_url = "http://95.35.170.58:8000/host_match"
-const ip = "localhost:8000"
-const host_url = "http://localhost:8000/host_match"
+const ip = "95.35.170.58:8000"
+const host_url = "http://95.35.170.58:8000/host_match"
+#const ip = "localhost:8000"
+#const host_url = "http://localhost:8000/host_match"
 #const delete_url = "http://95.35.170.58:8000/delete_lobby/"
 
 signal connected_to_server()
