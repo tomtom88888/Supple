@@ -1559,3 +1559,4 @@ wait_time = 3.0
 [connection signal="animation_finished" from="OpAnsYourEqAnim/OpAnsYourEqAnimationPlayer" to="." method="_on_op_ans_your_eq_animation_player_animation_finished"]
 [connection signal="animation_finished" from="YourAnsOpEqAnim/YourAnsOpEqAnimationPlayer" to="." method="_on_your_ans_op_eq_animation_player_animation_finished"]
 [connection signal="pressed" from="SubmitButton" to="." method="_on_submit_button_pressed"]
+[connection signal="text_changed" from="YourEquation" to="." method="_on_your_equation_text_changed"]

@@ -51,7 +51,8 @@ func _ready() -> void:
 	enemy_health = [100, 0]
 	difficulty = 0
 	submitted_equation = false
-
+	
+	
 
 func on_won_game():
 	win_anim.play_animation()
@@ -102,7 +103,12 @@ func handle_timers():
 			prev_time_down = TimeElapsed.time_elapsed
 		print(str(counting_down_time - (TimeElapsed.time_elapsed - prev_time_down)))
 		time_text.text = str(counting_down_time - (TimeElapsed.time_elapsed - prev_time_down)).substr(0, 3)
-	else:
+		if counting_down_time - (TimeElapsed.time_elapsed - prev_time_down) == 0:
+			counting_down_timer = false
+			if turn_type == "attack":
+				web_sockets_manager.send(JSON.stringify({"player": web_sockets_manager.your_player_id, "time": TimeElapsed.time_elapsed - prev_defense_time, "action": "submit_equation", "equation": "0 = 1"}))
+			elif turn_type == "defend":
+				web_sockets_manager.send(JSON.stringify({"player": web_sockets_manager.your_player_id, "time": TimeElapsed.time_elapsed - prev_attack_time, "action": "submit_defend", "solution": randf_range(-10000.0000, 10000.0000)}))
 		first_time_up = true
 		first_time_down = true
 		
@@ -271,3 +277,7 @@ func handle_animation_stop():
 		equation_timer.start()
 	elif turn_type == "defend":
 		counting_up_timer = true
+
+
+func _on_your_equation_text_changed(new_text: String) -> void:
+	didnt_write_c = false
