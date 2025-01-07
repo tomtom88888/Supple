@@ -22,7 +22,7 @@ TimeElapsed="*res://scripts/time.gd"
 [display]
 
 window/size/viewport_width=1080
-window/size/viewport_height=1920
+window/size/viewport_height=2150
 window/size/initial_position=Vector2i(0, -100)
 window/size/window_width_override=1080
 window/size/window_height_override=1920

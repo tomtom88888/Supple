@@ -1,6 +1,5 @@
 extends Control
 
-@onready var web_scokets_manger = $"../WebSocketsManager"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -13,8 +12,9 @@ func _process(delta: float) -> void:
 
 
 func _on_join_match_pressed() -> void:
-	get_parent().switch_scene(load("res://scenes/join_lobby.tscn"))
-
+	get_parent().switch_scene(load("res://scenes/join_tournament_lobby.tscn"))
 
 func _on_host_match_pressed() -> void:
-	web_scokets_manger.send_host_lobby_request()
+	#web_scokets_manger.send_host_lobby_request()
+	#host a tournament lobby request code should refrence webscoket manager
+	get_parent().switch_scene(load("res://scenes/finding_tournament_lobby.tscn"))

@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqkmrvkukp0in"]
+
+[ext_resource type="Script" path="res://scripts/lobby.gd" id="1_ifsu5"]
+[ext_resource type="Texture2D" uid="uid://ci2fwbpyilhma" path="res://sprites/BG.png" id="2_raqoc"]
+[ext_resource type="Script" path="res://scripts/falling_objects.gd" id="3_j5oi6"]
+
+[node name="Lobby" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ifsu5")
+
+[node name="Title" type="Label" parent="."]
+z_index = 5
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -333.0
+offset_top = -90.0
+offset_right = 333.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 111
+text = "Join Code: "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BG" type="TextureRect" parent="."]
+z_index = -5
+layout_mode = 0
+offset_left = -2451.0
+offset_top = -1594.0
+offset_right = 4591.0
+offset_bottom = 4648.0
+texture = ExtResource("2_raqoc")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="FallingObjects" type="Node2D" parent="."]
+script = ExtResource("3_j5oi6")
+
+[node name="SpawnTimer" type="Timer" parent="FallingObjects"]
+
+[connection signal="timeout" from="FallingObjects/SpawnTimer" to="FallingObjects" method="_on_spawn_timer_timeout"]

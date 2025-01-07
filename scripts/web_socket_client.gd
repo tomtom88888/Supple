@@ -153,7 +153,7 @@ func _on_debug_packet_received(packet: String) -> void:
 
 func _on_connected_to_server() -> void:
 	#send(JSON.stringify({"action": "set_username", "value": username}))
-	get_parent().switch_scene(load("res://scenes/lobby.tscn"))
+	get_parent().switch_scene(load("res://scenes/1v1_lobby.tscn"))
 	print("Connected to server")
 
 func _connection_closed() -> void:
@@ -178,7 +178,7 @@ func _process(delta: float) -> void:
 		#print("Request sent successfully")
 
 func send_host_lobby_request():
-	get_parent().switch_scene(load("res://scenes/finding_match.tscn"))
+	get_parent().switch_scene(load("res://scenes/finding_1v1_lobby.tscn"))
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
 	var client_id = rng.randi_range(0, 1000000)
@@ -196,12 +196,12 @@ func send_host_lobby_request():
 		print("Request sent successfully")
 
 func join_lobby_request(join_adress):
-	get_parent().switch_scene(load("res://scenes/finding_match.tscn"))
+	get_parent().switch_scene(load("res://scenes/finding_1v1_lobby.tscn"))
 	connect_to_url("ws://" + ip + "/ws/" + join_adress)
 
 func _on_host_lobby_request_completed(result, response_code, headers, body):
 	if response_code == 200:
-		get_parent().switch_scene(load("res://scenes/finding_match.tscn"))
+		get_parent().switch_scene(load("res://scenes/finding_1v1_lobby.tscn"))
 		var json = JSON.parse_string(body.get_string_from_utf8())
 		join_adress = json["join_address"]
 		print("Received join address:", join_adress)

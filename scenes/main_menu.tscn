@@ -87,4 +87,5 @@ icon = ExtResource("5_h8rvn")
 flat = true
 
 [connection signal="timeout" from="FallingObjects/SpawnTimer" to="FallingObjects" method="_on_spawn_timer_timeout"]
+[connection signal="pressed" from="TournamentButton" to="." method="_on_tournament_button_pressed"]
 [connection signal="pressed" from="1v1Button" to="." method="_on_v_1_button_pressed"]

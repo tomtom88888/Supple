@@ -12,9 +12,9 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	web_sockets_manager.username = line_edit.text
 
-
-func _on_find_match_button_pressed() -> void:
-	get_parent().switch_scene(load("res://scenes/tournament_menu.tscn"))
-
 func _on_v_1_button_pressed() -> void:
-		get_parent().switch_scene(load("res://scenes/tournament_menu.tscn"))
+	get_parent().switch_scene(load("res://scenes/1v1_menu.tscn"))
+
+
+func _on_tournament_button_pressed() -> void:
+	get_parent().switch_scene(load("res://scenes/1v1_menu.tscn"))

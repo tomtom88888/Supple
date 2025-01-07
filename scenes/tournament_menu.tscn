@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bwgqtda1njtyn"]
+[gd_scene load_steps=5 format=3 uid="uid://blbjo64flv0n6"]
 
 [ext_resource type="Texture2D" uid="uid://ci2fwbpyilhma" path="res://sprites/BG.png" id="1_e44tu"]
-[ext_resource type="Script" path="res://scripts/tournament_menu.gd" id="1_q5gq3"]
+[ext_resource type="Script" path="res://scripts/tournament_menu.gd" id="1_vjodn"]
 [ext_resource type="Texture2D" uid="uid://bs7fa7e6ggqs4" path="res://sprites/FindMatchButton.png" id="2_jdasi"]
 [ext_resource type="Script" path="res://scripts/falling_objects.gd" id="4_elvq8"]
 
@@ -12,7 +12,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_q5gq3")
+script = ExtResource("1_vjodn")
 
 [node name="Title" type="Label" parent="."]
 z_index = 5
