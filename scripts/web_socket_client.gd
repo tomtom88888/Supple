@@ -183,7 +183,7 @@ func send_host_lobby_request():
 	rng.randomize()
 	var client_id = rng.randi_range(0, 1000000)
 	var json_body = {}
-	var headers = ["Content-Type: application/json"]
+	var headers = ["Content-Type: application/json", "Access-Control-Allow-Origin: *", 'Access-Control-Allow-Credentials: true']
 	var result = join_http_request.request(
 		host_url,
 		headers,

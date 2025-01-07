@@ -1,9 +1,62 @@
-[gd_scene load_steps=5 format=3 uid="uid://biebd6n3jy551"]
+[gd_scene load_steps=9 format=3 uid="uid://biebd6n3jy551"]
 
 [ext_resource type="PackedScene" uid="uid://e33lurhb5kf0" path="res://scenes/main_menu.tscn" id="1_i8dd0"]
 [ext_resource type="Script" path="res://scripts/scene_handler.gd" id="1_ttnyq"]
 [ext_resource type="Script" path="res://scripts/web_socket_client.gd" id="2_fbfoc"]
 [ext_resource type="Script" path="res://scripts/falling_objects.gd" id="4_11jy7"]
+
+[sub_resource type="Animation" id="Animation_b86bf"]
+resource_name = "fade_in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_y2u8x"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_4hk12"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vh81f"]
+_data = {
+"RESET": SubResource("Animation_4hk12"),
+"fade_in": SubResource("Animation_b86bf"),
+"fade_out": SubResource("Animation_y2u8x")
+}
 
 [node name="SceneHandler" type="Control" node_paths=PackedStringArray("current_scene")]
 layout_mode = 3
@@ -30,5 +83,21 @@ layout_mode = 1
 script = ExtResource("4_11jy7")
 
 [node name="SpawnTimer" type="Timer" parent="FallingObjects"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../ColorRect")
+libraries = {
+"": SubResource("AnimationLibrary_vh81f")
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+modulate = Color(0, 0, 0, 0)
+z_index = 40
+layout_mode = 0
+offset_left = -331.0
+offset_top = -305.0
+offset_right = 1532.0
+offset_bottom = 2651.0
+mouse_filter = 2
 
 [connection signal="timeout" from="FallingObjects/SpawnTimer" to="FallingObjects" method="_on_spawn_timer_timeout"]

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://b0v8ql5jy7ytx"]
+[gd_scene load_steps=6 format=3 uid="uid://b0v8ql5jy7ytx"]
 
-[ext_resource type="Script" path="res://scenes/join_tournament_lobby.gd" id="1_6cone"]
+[ext_resource type="Script" path="res://scripts/join_tournament_lobby.gd" id="1_6cone"]
 [ext_resource type="Texture2D" uid="uid://ci2fwbpyilhma" path="res://sprites/BG.png" id="2_l63xc"]
 [ext_resource type="Texture2D" uid="uid://bs7fa7e6ggqs4" path="res://sprites/FindMatchButton.png" id="3_oupf7"]
 [ext_resource type="Script" path="res://scripts/falling_objects.gd" id="4_drifu"]
+[ext_resource type="PackedScene" uid="uid://bnoe6dk2cgag0" path="res://scenes/back_button.tscn" id="5_xeb8s"]
 
 [node name="JoinTournamentLobby" type="Control"]
 layout_mode = 3
@@ -84,6 +85,12 @@ z_index = -5
 script = ExtResource("4_drifu")
 
 [node name="SpawnTimer" type="Timer" parent="FallingObjects"]
+
+[node name="BackButton" parent="." instance=ExtResource("5_xeb8s")]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 341.0
+offset_bottom = 320.0
 
 [connection signal="pressed" from="JoinLobbyButton" to="." method="_on_join_lobby_button_pressed"]
 [connection signal="timeout" from="FallingObjects/SpawnTimer" to="FallingObjects" method="_on_spawn_timer_timeout"]

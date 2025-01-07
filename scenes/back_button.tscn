@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnoe6dk2cgag0"]
+
+[ext_resource type="Script" path="res://scripts/back_button.gd" id="1_b3xnm"]
+[ext_resource type="Texture2D" uid="uid://bq7kmckvikl0f" path="res://sprites/BackButton.png" id="1_ju6ui"]
+
+[node name="BackButton" type="TextureButton"]
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(0.555, 0.555)
+texture_normal = ExtResource("1_ju6ui")
+script = ExtResource("1_b3xnm")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]
