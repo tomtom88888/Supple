@@ -87,6 +87,7 @@ script = ExtResource("4_rrgcl")
 [node name="SpawnTimer" type="Timer" parent="FallingObjects"]
 
 [node name="BackButton" parent="." instance=ExtResource("5_sghtd")]
+layout_mode = 0
 offset_left = 20.0
 offset_top = 20.0
 offset_right = 341.0

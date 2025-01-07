@@ -1,6 +1,6 @@
 extends Panel
 
-@onready var game_started_animation_player: AnimationPlayer = $GameStartedAnimationPlayer
+@onready var game_started_animation_player: AnimationPlayer = $WinAnimationPlayer
 @onready var turn_type_title: Label = $Data/TurnTypeTitle
 @onready var red: CPUParticles2D = $Data/TurnTypeTitle/Confetti/red
 @onready var yellow: CPUParticles2D = $Data/TurnTypeTitle/Confetti/yellow

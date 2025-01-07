@@ -13,8 +13,4 @@ func _process(delta: float) -> void:
 
 
 func _on_join_match_pressed() -> void:
-	get_parent().switch_scene(load("res://scenes/join_1v1_lobby.tscn"))
-
-
-func _on_host_match_pressed() -> void:
-	web_scokets_manger.send_host_lobby_request()
+	web_scokets_manger.send_join_rquest()
