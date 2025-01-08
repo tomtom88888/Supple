@@ -96,7 +96,7 @@ func _process(delta: float) -> void:
 	else:
 		debug_title.visible = false
 	
-	equation_timer_text.text = "Time Left To Write:" + str(equation_timer.time_left).substr(0, 4)
+	equation_timer_text.text = "Time Left To Write: " + str(equation_timer.time_left).substr(0, 3)
 	
 	if didnt_write_c == false and attack_anim_finished:
 		didnt_write_c = true
@@ -256,41 +256,41 @@ func set_time(time):
 
 func equation_not_valid():
 	not_valid_animation_player.play("EquationNotValidAnim")
-	
+
+func check_equation_validity(equation) -> bool:
+	for c in equation:
+		if c not in "+-/*0123456789.=(): ":
+			return false
+	return true
+
 func _on_submit_button_pressed() -> void:
+	
+	var field_text = your_equation.text
+	
+	if not check_equation_validity(field_text):
+		equation_not_valid()
+		return
+
 	if turn_type == "attack":
 		if not submitted_equation:
-			equation = your_equation.text
-			for c in equation:
-				if c not in "+-/*0123456789.=() ":
-					print(c)
-					equation_not_valid()
-					return
+			equation = field_text
 			your_equation.text = ""
 			counting_down_timer = false
 			your_eq_anim.play_animation(equation)
 			your_equation_text.text = str(equation)
 			submitted_equation = true
 		else:
-			var answer = your_equation.text
-			for c in answer:
-				if c not in "0123456789.-":
-					equation_not_valid()
-					return
+			
 			var time_took_to_solve = TimeElapsed.time_elapsed - prev_attack_time
 			your_equation.text = ""
 			submitted_equation = false
-			web_sockets_manager.send(JSON.stringify({"player": web_sockets_manager.your_player_id, "time": snappedf(time_took_to_solve, 0.01), "action": "submit_equation", "equation": str(equation) + " = " + str(answer)}))
+			web_sockets_manager.send(JSON.stringify({"player": web_sockets_manager.your_player_id, "time": snappedf(time_took_to_solve, 0.01), "action": "submit_equation", "equation": str(equation) + " = " + str(field_text)}))
 			your_equation_text.text = "Your Equation:"
 	elif turn_type == "defend":
-		var answer = your_equation.text
-		for c in answer:
-			if c not in "0123456789.- ":
-				equation_not_valid()
-				return
+
 		var time_took_to_solve = TimeElapsed.time_elapsed - prev_defense_time
 		your_equation.text = ""
-		web_sockets_manager.send(JSON.stringify({"player": web_sockets_manager.your_player_id, "time": time_took_to_solve, "action": "submit_defend", "solution": str(answer)}))
+		web_sockets_manager.send(JSON.stringify({"player": web_sockets_manager.your_player_id, "time": time_took_to_solve, "action": "submit_defend", "solution": str(field_text)}))
 		#send answer to beckend
 
 func _on_your_eq_animation_player_animation_finished(anim_name: StringName) -> void:
