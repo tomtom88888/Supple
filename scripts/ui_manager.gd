@@ -84,9 +84,12 @@ func _process(delta: float) -> void:
 		equation_timer_text.visible = true
 	
 	if turn_type == "attack":
+		your_equation.visible = true
 		if submitted_equation:
 			equation_timer.stop()
 	
+	if turn_type == "wait":
+		your_equation.visible = false
 	
 	if not debugging:
 		handle_timers()
@@ -104,6 +107,8 @@ func _process(delta: float) -> void:
 		equation_timer.start()
 	
 	if turn_type == "defend":
+		your_equation.visible = true
+
 		time_identifier.text = "Your Time:"
 		set_enemy_equation(enemy_equation)
 		submit_button.visible = true
@@ -264,7 +269,7 @@ func check_equation_validity(equation) -> bool:
 	return true
 
 func _on_submit_button_pressed() -> void:
-	
+	your_equation.release_focus()
 	var field_text = your_equation.text
 	
 	if not check_equation_validity(field_text):

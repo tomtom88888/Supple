@@ -3,6 +3,7 @@ extends Control
 @export var current_scene: Control
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
+
 func switch_scene(scene):
 	animation_player.play("fade_in")
 	await get_tree().create_timer(0.5).timeout
@@ -19,6 +20,8 @@ func switch_scene_and_return(scene) -> Control:
 	add_child(current_scene)
 	return current_scene
 	animation_player.play("fade_out")
+
+
 
 
 func reload_current_scene():

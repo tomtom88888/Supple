@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://cntutkru2mait"]
+[gd_scene load_steps=33 format=3 uid="uid://cntutkru2mait"]
 
 [ext_resource type="Texture2D" uid="uid://cjdl41dhgb81w" path="res://sprites/HealthBar.png" id="1_1uwvm"]
 [ext_resource type="Script" path="res://scripts/op_eq_ans_anim.gd" id="1_ohmt2"]
@@ -9,7 +9,6 @@
 [ext_resource type="FontFile" uid="uid://c4vb2s2xdy8ma" path="res://fonts/Outfit-ExtraBold.ttf" id="2_dtfsr"]
 [ext_resource type="Script" path="res://scripts/game_started_anim.gd" id="2_gos2a"]
 [ext_resource type="Texture2D" uid="uid://c4rlqltrb4l7o" path="res://sprites/EnemyHealthBarUnder.png" id="3_ogkdd"]
-[ext_resource type="Texture2D" uid="uid://csawjxwjg75vl" path="res://sprites/GameDataBar.png" id="4_3e3ya"]
 [ext_resource type="Texture2D" uid="uid://brca8hcoi2cs7" path="res://sprites/DifficultyBarUnderLarge.png" id="4_6al3j"]
 [ext_resource type="Texture2D" uid="uid://cbhfjvd6scab0" path="res://sprites/HealthBarUnder.png" id="4_kboja"]
 [ext_resource type="Texture2D" uid="uid://dkyijtdyshco1" path="res://sprites/EnemyHealthBar.png" id="4_r3dnk"]
@@ -1434,30 +1433,50 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="GameDataBar" type="TextureRect" parent="."]
+[node name="GameDataBar" type="Control" parent="."]
 layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
+anchors_preset = 8
+anchor_left = 0.5
 anchor_top = 0.5
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -40.0
-offset_top = -20.0
-offset_bottom = 20.0
-grow_horizontal = 0
+offset_left = 213.0
+offset_top = -283.0
+offset_right = 540.0
+offset_bottom = 283.0
+grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("4_3e3ya")
 
-[node name="Clock" type="TextureRect" parent="GameDataBar"]
+[node name="TimeIdentifier" type="Label" parent="GameDataBar"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -136.5
-offset_top = 35.0
-offset_right = 137.5
-offset_bottom = 309.0
+offset_left = -178.5
+offset_top = -108.0
+offset_right = 178.5
+offset_bottom = -13.0
 grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 33
+text = "Hidden Because It's
+ The Opponent's turn"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Clock" type="TextureRect" parent="GameDataBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -868.5
+offset_top = -137.0
+offset_right = -594.5
+offset_bottom = 137.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("5_khcpc")
 
 [node name="TimeText" type="Label" parent="GameDataBar/Clock"]
@@ -1481,9 +1500,9 @@ text = "60"
 [node name="DifficultyBar" type="TextureProgressBar" parent="GameDataBar"]
 layout_mode = 0
 offset_left = 23.0
-offset_top = 359.0
+offset_top = 223.0
 offset_right = 304.0
-offset_bottom = 516.0
+offset_bottom = 380.0
 texture_under = ExtResource("10_4ai41")
 texture_progress = ExtResource("5_n1bf3")
 
@@ -1502,23 +1521,6 @@ theme_override_fonts/font = ExtResource("2_dtfsr")
 theme_override_font_sizes/font_size = 56
 text = "0"
 horizontal_alignment = 1
-
-[node name="TimeIdentifier" type="Label" parent="GameDataBar"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -178.5
-offset_top = -108.0
-offset_right = 178.5
-offset_bottom = -13.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 33
-text = "Hidden Because It's
- The Opponent's turn"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="EnemyEquationText" type="Label" parent="."]
 layout_mode = 1
@@ -1605,9 +1607,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -400.0
-offset_top = -539.0
+offset_top = -921.0
 offset_right = 400.0
-offset_bottom = -448.0
+offset_bottom = -830.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 60
@@ -1621,9 +1623,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -279.0
-offset_top = -128.0
+offset_top = 222.0
 offset_right = 279.0
-offset_bottom = -17.0
+offset_bottom = 333.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_dtfsr")
@@ -1638,9 +1640,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -396.0
-offset_top = -207.0
+offset_top = 143.0
 offset_right = 396.0
-offset_bottom = -102.0
+offset_bottom = 248.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 76
@@ -1649,7 +1651,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="EquationTimer" type="Timer" parent="."]
-wait_time = 7.0
+wait_time = 12.0
 
 [node name="DebugTitle" type="Label" parent="."]
 layout_mode = 1
