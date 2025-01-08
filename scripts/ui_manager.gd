@@ -136,7 +136,7 @@ func handle_timers():
 		if counting_down_time - (TimeElapsed.time_elapsed - prev_time_down) <= 0:
 			counting_down_timer = false
 			if turn_type == "attack":
-				web_sockets_manager.send(JSON.stringify({"player": web_sockets_manager.your_player_id, "time": TimeElapsed.time_elapsed - prev_attack_time, "action": "submit_equation", "equation": "0 = 1"}))
+				web_sockets_manager.send(JSON.stringify({"player": web_sockets_manager.your_player_id, "time": 60, "action": "submit_equation", "equation": "0 = 1"}))
 			elif turn_type == "defend":
 				web_sockets_manager.send(JSON.stringify({"player": web_sockets_manager.your_player_id, "time": TimeElapsed.time_elapsed - prev_defense_time, "action": "submit_defend", "solution": randf_range(-10000.0000, 10000.0000)}))
 				

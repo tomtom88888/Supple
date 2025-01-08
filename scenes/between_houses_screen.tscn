@@ -1,0 +1,80 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgrq5kwjkgpr7"]
+
+[ext_resource type="Texture2D" uid="uid://ci2fwbpyilhma" path="res://sprites/BG.png" id="1_nbc56"]
+[ext_resource type="Script" path="res://scripts/falling_objects.gd" id="2_7rp6y"]
+
+[node name="BetweenHousesScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG" type="TextureRect" parent="."]
+z_index = -5
+offset_left = -2724.0
+offset_top = -2157.0
+offset_right = 5542.0
+offset_bottom = 6350.0
+texture = ExtResource("1_nbc56")
+
+[node name="FallingObjects" type="Node2D" parent="."]
+z_index = -5
+script = ExtResource("2_7rp6y")
+
+[node name="SpawnTimer" type="Timer" parent="FallingObjects"]
+
+[node name="WaitTitle" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -539.5
+offset_top = -210.0
+offset_right = 539.5
+offset_bottom = 210.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 101
+text = "Waiting for other
+ matches to end..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RoundsLeft" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -305.0
+offset_top = 219.0
+offset_right = 305.0
+offset_bottom = 357.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 101
+text = "Rounds Left:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WonTitle" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -530.0
+offset_top = 33.0
+offset_right = 530.0
+offset_bottom = 171.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.724288, 0.754699, 0.343315, 1)
+theme_override_font_sizes/font_size = 101
+text = "You Won Your Round!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="timeout" from="FallingObjects/SpawnTimer" to="FallingObjects" method="_on_spawn_timer_timeout"]
